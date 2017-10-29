@@ -6,7 +6,7 @@
 
 class Menu {
    private:
-      string returnCMD;
+      std::string returnCMD;
    
    public:
       Menu();
@@ -22,11 +22,11 @@ class Menu {
       //This function will be used in getPrompt() to analyze whether a 
       // command(s) were entered in properly. If not, getPrompt() will 
       // repeat.
-      bool verifyPrompt(string );
+      bool verifyPrompt(std::string );
       
       //Returns returnCMD such that it is protected and
       // can be accessed in different classes as necessary.
-      string accessString();
+      std::string accessString();
 };
 
 #endif

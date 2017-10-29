@@ -5,19 +5,22 @@ Menu::Menu() : returnCMD("") {}
 
 Menu::~Menu() {}
 
-bool Menu::verifyPrompt(string prompt)
+bool Menu::verifyPrompt(std::string prompt)
 {
    
+   //I decided that split string will verify as it splits, that way
+   // access to the vector is simpler, and it allows menu to simply be a menu.
    CMD::splitString(prompt);
    
-   for(unsigned i = 0; i < CMDList.size(); i++)
+   /* I WILL DISCARD BELOW LATER
+   for(unsigned i = 0; i < this->CMDList.size(); i++)
    {
-      if(/*Compare CMDList[i] to something and verify it*/)
+      if(Compare CMDList[i] to something and verify it)
       {
          return false;
       }
    }
-   
+   */
    return true;
 
    /* Is there a way to compare system commands with our prompt?
@@ -30,13 +33,13 @@ bool Menu::verifyPrompt(string prompt)
 
 void Menu::getPrompt()
 {
-   string prompt;
+   std::string prompt;
    bool validPrompt = false;
    
    while(!validPrompt)
    {
-      cout << "$ ";
-      getline(cin, prompt);
+      std::cout << "$ ";
+      getline(std::cin, prompt);
    
       validPrompt = verifyPrompt(prompt); 
    }
@@ -48,7 +51,7 @@ void Menu::getPrompt()
  */
 }
 
-string Menu::accessString()
+std::string Menu::accessString()
 {
    return returnCMD;
 }
