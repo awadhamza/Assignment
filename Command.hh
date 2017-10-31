@@ -4,6 +4,8 @@
 #include "Interface.hh"
 #include <vector>
 
+class CMD;
+
 class Command : public Interface {
    private:
       
@@ -11,9 +13,8 @@ class Command : public Interface {
       Command(){};
       ~Command(){};
       
-      std::vector<CMD> CMDList;
+      std::vector<CMD* > CMDList;
       
-      void execute() = 0;
 };
 
 #endif

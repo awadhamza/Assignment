@@ -9,7 +9,7 @@ class Menu {
       std::string returnCMD;
    
    public:
-      Menu();
+      Menu();vim
    
       ~Menu();
    

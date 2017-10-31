@@ -7,7 +7,6 @@ class Interface {
    public:
       Interface() {};
       ~Interface() {};
-      virtual void execute() = 0;
 };
 
 #endif
