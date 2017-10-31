@@ -123,3 +123,16 @@ std::vector<std::string> Tokenizer::split()
 
     return tokens;
 }
+
+void retPos(std::string::const_iterator a, std::string::const_iterator b)
+{
+	a = b;
+	return;
+}
+
+std::string Tokenizer::retString()
+{
+	
+	return this.*currPos;
+	
+}

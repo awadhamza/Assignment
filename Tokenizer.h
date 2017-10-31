@@ -36,13 +36,12 @@ public:
     void setDelimiter(const std::string& delimiter);    // set delimiter string only
 
     std::string next();                                 // return the next token, return "" if it ends
-
+    
+    
+    
     std::vector<std::string> split();                   // return array of tokens from current cursor
 
-protected:
 
-
-private:
     void skipDelimiter();                               // ignore leading delimiters
     bool isDelimiter(char c);                           // check if the current char is delimiter
 
@@ -51,6 +50,8 @@ private:
     std::string delimiter;                              // delimiter string
     std::string::const_iterator currPos;                // string iterator pointing the current position
 
+	void retPos(std::string::const_iterator, std::string::const_iterator);
+	std::string retString( );
 };
 
 #endif // TOKENIZER_H
