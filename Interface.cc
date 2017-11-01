@@ -1,5 +1,7 @@
 #include "Interface.hh"
 
+#include <iostream>
+
 Interface::Interface() {}
 
 Interface::~Interface() {}
@@ -12,7 +14,7 @@ void Interface::orchestrate()
 	Execute *eggsocute;
 	
 	menu->getPrompt();
-	command->splitString(Menu::accessString());
+	command->splitString(menu->accessString());
 	eggsocute->execute();
 	
 	return;

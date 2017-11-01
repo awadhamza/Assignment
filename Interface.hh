@@ -2,7 +2,6 @@
 #define Interface_hh
 
 #include "Menu.hh"
-#include "Command.hh"
 #include "Execute.hh"
 
 class Interface {
