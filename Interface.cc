@@ -12,7 +12,7 @@ void Interface::orchestrate()
 	Execute eggsocute;
 	
 	menu.getPrompt();
-	command.splitString();
+	command.splitString(Menu::accessString());
 	eggsocute.execute();
 	
 	return;
