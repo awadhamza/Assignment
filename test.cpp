@@ -4,10 +4,10 @@
 
 int main()
 {
-
-   Menu* menu;
-   menu->getPrompt();
-
-
+	
+	Interface interface;
+	
+	interface.orchestrate();
+	
    return 0;
 }
