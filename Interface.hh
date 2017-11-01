@@ -1,8 +1,9 @@
 #ifndef Interface_hh
 #define Interface_hh
 
-class Menu;
-class Command;
+#include "Menu.hh"
+#include "Command.hh"
+#include "Execute.hh"
 
 class Interface {
    private:
