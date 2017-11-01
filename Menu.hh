@@ -9,7 +9,7 @@ class Menu {
       std::string returnCMD;
    
    public:
-      Menu();vim
+      Menu();
    
       ~Menu();
    
@@ -19,10 +19,6 @@ class Menu {
       // split strings of the prompt entered in returnCMD.
       void getPrompt();
       
-      //This function will be used in getPrompt() to analyze whether a 
-      // command(s) were entered in properly. If not, getPrompt() will 
-      // repeat.
-      bool verifyPrompt(std::string );
       
       //Returns returnCMD such that it is protected and
       // can be accessed in different classes as necessary.
