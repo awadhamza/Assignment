@@ -9,11 +9,11 @@ class CMD : public Command {
 		std::string instruction;
 		int connector;
 	public:
-	   CMD();
-	   ~CMD();
-	   CMD(std::string, int);
-	   int checkConnector(std::string );
-	   void splitString();
+		CMD();
+		~CMD();
+		CMD(std::string, int);
+		int getConnector();
+		std::string getString();
 };
 
 #endif
