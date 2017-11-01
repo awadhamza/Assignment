@@ -14,9 +14,7 @@ class Menu {
       ~Menu();
    
       //Runs the entire program. The core of the funciton is to display
-      // a running command prompt and receive the prompt. This function
-      // will then signal Command's child, CMD class, to access it and 
-      // split strings of the prompt entered in returnCMD.
+      // a running command prompt and receive the prompt.
       void getPrompt();
       
       
