@@ -130,9 +130,4 @@ void retPos(std::string::const_iterator a, std::string::const_iterator b)
 	return;
 }
 
-std::string Tokenizer::retString()
-{
-	
-	return this.*currPos;
-	
-}
+

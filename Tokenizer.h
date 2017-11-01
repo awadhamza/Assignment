@@ -51,7 +51,7 @@ public:
     std::string::const_iterator currPos;                // string iterator pointing the current position
 
 	void retPos(std::string::const_iterator, std::string::const_iterator);
-	std::string retString( );
+
 };
 
 #endif // TOKENIZER_H
