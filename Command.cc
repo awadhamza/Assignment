@@ -1,7 +1,7 @@
 #include "Command.hh"
 #include "Interface.hh"
 #include "CMD.hh"
-#include "Tokenizer.hh"
+#include "Tokenizer.h"
 #include <vector>
 #include <string>
 
