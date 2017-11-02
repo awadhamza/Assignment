@@ -1,18 +1,18 @@
 #include "Command.hh"
 #include "Interface.hh"
-#include "CMD.hh"
+
 #include "Tokenizer.h"
 #include <vector>
 #include <string>
 
 int Command::checkConnector(std::string conString){
-        if(conString.at(conString.size() - 1) = "&"){
+        if(conString.at(conString.size() - 1) == '&'){
                 return 3;
         }
-        else if(conString.at(conString.size() - 1) = "|"){
+        else if(conString.at(conString.size() - 1) == '|'){
                 return 2;
         }
-        else if(conString.at(conString.size() - 1) = ";"){
+        else if(conString.at(conString.size() - 1) == ';'){
                 return 1;
         }
         else{
@@ -21,7 +21,7 @@ int Command::checkConnector(std::string conString){
 }
 
 std::string Command::cutConnector(std::string cutString){
-        return conString.substr(0, conString.size() - 1);
+        return cutString.substr(0, cutString.size() - 1);
 }
 
 void Command::splitString(std::string instruction){
@@ -36,7 +36,7 @@ void Command::splitString(std::string instruction){
         {
                 connection = checkConnector(currCommand);
                 if(connection == 0){
-                        if(basket = ""){
+                        if(basket == ""){
                                 basket = currCommand;
                         }
                         else{
@@ -57,3 +57,9 @@ void Command::splitString(std::string instruction){
 	temp = new CMD(basket, 0);
 	CMDlist.push_back(temp);
 }
+
+std::vector<CMD*> Command::getVector()
+{
+	return CMDlist;
+}
+
