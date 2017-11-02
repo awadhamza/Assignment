@@ -11,6 +11,6 @@ int CMD::getConnector(){
 	return connector;
 }
 
-std::string CMD::getString(){
+std::string CMD::getInstruction(){
 	return instruction;
 }

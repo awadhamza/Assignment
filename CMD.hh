@@ -1,10 +1,10 @@
 #ifndef CMD_HH
 #define CMD_HH
-#include "Tokenizer.h"
+
 #include "Command.hh"
 #include <iostream>
 
-class CMD : public Command {
+class CMD {
 	private:
 		std::string instruction;
 		int connector;
@@ -13,7 +13,7 @@ class CMD : public Command {
 		~CMD();
 		CMD(std::string, int);
 		int getConnector();
-		std::string getString();
+		std::string getInstruction();
 };
 
 #endif
