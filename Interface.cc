@@ -1,6 +1,6 @@
 #include "Interface.hh"
-
-#include <iostream>
+#include "Menu.hh"
+#include "Execute.hh"
 
 Interface::Interface() {}
 
@@ -8,14 +8,19 @@ Interface::~Interface() {}
 
 void Interface::orchestrate()
 {
-	
-	Menu *menu;
-	Command *command;
-	Execute *eggsocute;
-	
-	menu->getPrompt();
-	command->splitString(menu->accessString());
-	eggsocute->execute();
-	
+	while(true)
+	{
+		Menu *menu = new Menu();
+		Command *command = new Command();
+		Execute *eggsocute = new Execute();
+		
+		menu->getPrompt();
+		command->splitString(menu->accessString());
+		eggsocute->execute(command->getVector());
+		
+		delete menu;
+		delete command;
+		delete eggsocute;
+	}
 	return;
 }
