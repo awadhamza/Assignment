@@ -14,7 +14,7 @@ class Command{
 		std::vector<CMD*> CMDlist;
    public: 
 		Command(){};
-		~Command(){};
+		~Command();
 		int checkConnector(std::string);  //helper function
 		std::string cutConnector(std::string);  //helper function
 		void splitString(std::string);		//Parser, and fills vector with full and separated commands

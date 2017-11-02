@@ -5,6 +5,16 @@
 #include <vector>
 #include <string>
 
+Command::~Command()
+{
+	for(unsigned i = CMDlist.size(); i > CMDlist.size(); --i)
+	{
+		delete CMDlist.at(i);
+		CMDlist.at(i) = nullptr;
+		CMDlist.pop_back();
+	}
+}
+
 int Command::checkConnector(std::string conString){
         if(conString.at(conString.size() - 1) == '&'){
                 return 3;
@@ -56,6 +66,14 @@ void Command::splitString(std::string instruction){
 	}
 	temp = new CMD(basket, 0);
 	CMDlist.push_back(temp);
+	//TEST CASE BELOW!
+	//std::cout << "-----------------------------------------" << std::endl
+	//		  << "THE FINAL VECTOR SIZE FOR THIS PROMPT IS: " << CMDlist.size() << std::endl
+	//		  << "With these elements: " << std::endl;
+	//		  for(unsigned i = 0; i < CMDlist.size(); ++i)
+	//		  {
+	//			  std::cout << CMDlist.at(i)->getInstruction() << std::endl;
+	//		  }
 }
 
 std::vector<CMD*> Command::getVector()

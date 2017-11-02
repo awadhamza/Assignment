@@ -2,14 +2,17 @@
 
 Menu::Menu() : returnCMD("") {}
 
-Menu::~Menu() {}
+Menu::~Menu() 
+{
+	returnCMD = "";
+}
 
 void Menu::getPrompt()
 {   
    std::cout << "$ ";
    
    getline(std::cin, returnCMD);
-      
+   
    return;
    /* As of now, interface will call Command's splitString function next. */
 }
