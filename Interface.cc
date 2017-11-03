@@ -2,13 +2,23 @@
 #include "Menu.hh"
 #include "Execute.hh"
 
-Interface::Interface() {}
+using std::vector;
+using std::cout;
+using std::endl;
+using std::cin;
+
+Interface::Interface() : connectors(0), commands(0) {}
 
 Interface::~Interface() {}
 
-void Interface::changeConVec(vector<int> newConnectors) : connectors(newConnectors){}
+void Interface::changeConVec(vector<int> newConnectors) {
+	 connectors = newConnectors;
+ }
 
-void Interface::changeCommandVec(vector<vector<char*>> newCommands) : commands(newCommands){}
+void Interface::changeCommandVec(vector<vector<char*>> newCommands) {
+	commands = newCommands;
+}
+
 
 void Interface::orchestrate()
 {
@@ -20,7 +30,9 @@ void Interface::orchestrate()
 		
 		menu->getPrompt();
 		command->splitString(menu->accessString());
-		eggsocute->execute(command->getVector());
+		changeConVec(command -> getConVec());
+		changeCommandVec(command -> getCommandVec());
+		eggsocute->execute(commands, connectors);
 		
 		delete menu;
 		delete command;

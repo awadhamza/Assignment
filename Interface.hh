@@ -1,6 +1,9 @@
 #ifndef Interface_hh
 #define Interface_hh
 
+#include <vector>
+using std::vector;
+
 class Interface {
    private:
       vector<int> connectors;

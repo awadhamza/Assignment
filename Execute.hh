@@ -2,7 +2,7 @@
 #define EXECUTE_HH
 
 #include <vector>
-#include "CMD.hh"
+using std::vector;
 
 class Execute {
 	private:
@@ -10,7 +10,7 @@ class Execute {
 	public:
 		Execute();
 		~Execute();
-		void execute(std::vector<CMD*> );
+		void execute(vector<vector<char*>> , vector<int> );
 		
 };
 

@@ -5,6 +5,11 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
+using std::vector;
+using std::cout;
+using std::endl;
+using std::cin;
+
 int vec_index = 0;
 int success = 0;
 
@@ -12,11 +17,28 @@ Execute::Execute() {}
 
 Execute::~Execute() {}
 
-void Execute::execute(std::vector<CMD*> CMDlist)
+void Execute::execute(vector<vector<char*>> cmds, vector<int> connectors)
 {
+	cout << "This is outputting in EXECUTE()" << endl;
 	
+	//cout << "About to execute. Here are the commands within the command vector." << endl;
 	
+	//for(unsigned i = 0; i < cmds.size(); ++i)
+	//{
+	//	cout << "Index: " << i << endl;
+	//	for(unsigned j = 0; j < cmds.at(i).size(); ++j)
+	//	{
+	//		
+	//		cout << cmds.at(i).at(j) << " ";
+	//		
+	//	}
+	//	cout << endl;
+	//	
+	//}
 	
+	cout << "DONE OUTPUTTING CMDLIST" << endl;
+	
+	/*
 	for( vec_index; vec_index < CMDlist.size(); ++vec_index )
 	{
 			
@@ -98,7 +120,7 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 			
 		}
 	
-	
+	*/
 	return;
 	
 }
