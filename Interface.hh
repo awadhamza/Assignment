@@ -6,8 +6,7 @@ using std::vector;
 
 class Interface {
    private:
-      vector<int> connectors;
-      vector<vector<char*>> commands;     
+
    public:
       Interface();
       ~Interface();

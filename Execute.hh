@@ -1,6 +1,8 @@
 #ifndef EXECUTE_HH
 #define EXECUTE_HH
 
+#include "CMD.hh"
+
 #include <vector>
 using std::vector;
 
@@ -10,7 +12,7 @@ class Execute {
 	public:
 		Execute();
 		~Execute();
-		void execute(vector<vector<char*>> , vector<int> );
+		void execute(vector<CMD*> );
 		
 };
 

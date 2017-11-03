@@ -7,17 +7,9 @@ using std::cout;
 using std::endl;
 using std::cin;
 
-Interface::Interface() : connectors(0), commands(0) {}
+Interface::Interface(){}
 
 Interface::~Interface() {}
-
-void Interface::changeConVec(vector<int> newConnectors) {
-	 connectors = newConnectors;
- }
-
-void Interface::changeCommandVec(vector<vector<char*>> newCommands) {
-	commands = newCommands;
-}
 
 
 void Interface::orchestrate()
@@ -30,9 +22,7 @@ void Interface::orchestrate()
 		
 		menu->getPrompt();
 		command->splitString(menu->accessString());
-		changeConVec(command -> getConVec());
-		changeCommandVec(command -> getCommandVec());
-		eggsocute->execute(commands, connectors);
+		eggsocute->execute(command->getVector());
 		
 		delete menu;
 		delete command;

@@ -3,6 +3,7 @@
 
 #include "Interface.hh"
 #include "Tokenizer.h"
+#include "CMD.hh"
 #include <vector>
 #include <iostream>
 
@@ -11,16 +12,14 @@ using std::vector;
 
 class Command{
    private:
-		vector<vector<char*>> CMDVec;
-		vector<int> connectVec;
+		vector<CMD*> CMDlist;
    public:
         Command(){};
-        ~Command(){};
+        ~Command();
         int checkConnector(std::string);
         std::string cutConnector(std::string);
         void splitString(string);
-        vector<int> getConVec();
-		vector<vector<char*>> getCommandVec();
+        vector<CMD*> getVector();
 };
 
 #endif

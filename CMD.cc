@@ -6,7 +6,6 @@ using namespace std;
 
 CMD::CMD() : instruction(""), connector(0) {}
 
-CMD::~CMD() {}
 
 CMD::CMD(std::string instruction, int connector) : instruction(instruction), connector(connector) {}
 
