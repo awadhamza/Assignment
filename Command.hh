@@ -9,7 +9,7 @@
 class CMD;
 
 class Command{
-   private:
+   private:  
       std::vector<CMD*> CMDlist;
    public: 
      	Command(){};
