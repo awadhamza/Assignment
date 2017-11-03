@@ -1,6 +1,5 @@
 #include "Command.hh"
 #include "Interface.hh"
-#include "CMD.hh"
 #include "Tokenizer.hh"
 #include <vector>
 #include <string>
@@ -25,35 +24,35 @@ std::string Command::cutConnector(std::string cutString){
 }
 
 void Command::splitString(std::string instruction){
-        Tokenizer splitter(instruction);
+Tokenizer splitter(instruction);
 
         int connection;
         std::string currCommand;
         std::string basket = "";
-	CMD* temp;
+        vector<vetor<char*>> commandVector;
+        vector<int> connectorVector;
+        vector<char*> commandChars;
 
         while((currCommand = splitter.next()) != "")
         {
                 connection = checkConnector(currCommand);
                 if(connection == 0){
-                        if(basket = ""){
-                                basket = currCommand;
-                        }
-                        else{
-                                basket += " " + currCommand;
-                        }
+                        commandChars.push_back(currCommand.c_str());
                 }
                 else{
                         if(connection == 1){
                                 currCommand = cutConnector(currCommand);
-                                basket += " " + currCommand;
-			}
-			
-			temp = new CMD(basket, connection);
-			CMDlist.push_back(temp);
-			basket = "";
-		}
-	}
-	temp = new CMD(basket, 0);
-	CMDlist.push_back(temp);
+                                commandChars.push_back(currCommand.c_str());
+                        }
+
+                        commandChars.push_back(0);
+                        connectorVector.push_back(connection);
+                        commandVector.push_back(commandChars);
+                        while(commandChars.size() > 0){
+                                commandChars.pop_back();
+                        }
+                }
+        }
+        changeConVec(connectorVector);
+        changeCommandVec(commandVector);
 }
