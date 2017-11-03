@@ -2,16 +2,22 @@
 #define Command_hh
 
 #include "Interface.hh"
+<<<<<<< HEAD
 #include "CMD.hh"
+=======
+#include "Tokenizer.hh"
+>>>>>>> interfaceAndMenu
 #include <vector>
 #include <iostream>
 
 
-class CMD;
-
 class Command{
+<<<<<<< HEAD
    private:
 		std::vector<CMD*> CMDlist;
+=======
+   private:  
+>>>>>>> interfaceAndMenu
    public: 
 		Command(){};
 		~Command();

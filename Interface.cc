@@ -6,6 +6,10 @@ Interface::Interface() {}
 
 Interface::~Interface() {}
 
+void Interface::changeConVec(vector<int> newConnectors) : connectors(newConnectors){}
+
+void Interface::changeCommandVec(vector<vector<char*>> newCommands) : commands(newCommands){}
+
 void Interface::orchestrate()
 {
 	while(true)
