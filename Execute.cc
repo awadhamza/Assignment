@@ -1,11 +1,11 @@
-#include "Execute.hh"
+#include "src/Execute.hh"
 #include <unistd.h>		//Grants executeable ability
 #include <stdio.h>		//Grants error checking output
 #include <stdlib.h>
 #include <iostream>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include "Tokenizer.h"
+#include "src/Tokenizer.h"
 #include <string.h>
 
 using namespace std;
