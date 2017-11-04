@@ -4,6 +4,35 @@
 #include <iostream>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include "Tokenizer.h"
+
+using namespace std;
+
+char* makeCharPointers(string instruc)
+{
+	Tokenizer token(instruc);
+	
+	string currentWord;
+	char* argArray[1024];
+	int i = 0;
+	
+	while((currentWord = token.next()) != "")
+	{
+		
+		
+		while(argArray[i]){
+			i++;
+		}
+		
+		argArray[i] = (char*)currentWord.c_str();
+		
+	}
+	
+	for(int j = 0; argArray[j]; j++) {
+		argArray[j] = 0;
+	}
+	
+}
 
 int vec_index = 0;
 int success = 0;
@@ -19,65 +48,58 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 	
 	for( vec_index; vec_index < CMDlist.size(); ++vec_index )
 	{
-			
+		int temp = 0;	
 		pid_t pid = fork();
 		
 		std::string currCommand = CMDlist.at(vec_index)->getInstruction();
 		
-		char* args[2];
-		args[0] = (char*)currCommand.c_str();
-		args[1] = 0;
+		char* argz[1024] = {makeCharPointers(currCommand)};
 			
 		if(pid == 0) //Child process
 		{
 			if(CMDlist.at(vec_index)->getConnector() == 3)
 			{
-				if( execvp(args[0], args) == -1 ) // if a command with a && failed
-				{					
-					perror("exec");
+				success++;
+				vec_index++;
+				
+				if(execvp(argz[0], argz) < 0){
+					perror("exec failed");
 					while(CMDlist.at(vec_index)->getConnector() == 3)
 					{
 						vec_index++;
 					}
-					//vec_index++;
+					//vec_index++; //for offset
+					success--;
 					
 				}
-				else
-				{
-					success++;
-				}			
 			}
 			else if (CMDlist.at(vec_index)->getConnector() == 2)
 			{
-				if( execvp(args[0], args) == -1 ) // if a command with a && failed
-				{					
-					perror("exec");
+				temp = vec_index;
+				while(CMDlist.at(vec_index)->getConnector() == 2)
+				{
 					vec_index++;
-					
 				}
-				else
+				//vec_index++; //for offset
+				success++;
+				
+				if(execvp(argz[0], argz) < 0)
 				{
-					while(CMDlist.at(vec_index)->getConnector() == 2)
-					{
-						vec_index++;
-					}
-					//vec_index++;
-					
-					success++;
-				}	
-			}
-			else if (CMDlist.at(vec_index)->getConnector() == 1)
-			{
-				if( execvp(args[0], args) == -1 )
-				{
-					perror("exec");
+					perror("exec failure");
+					success--;
+					vec_index = temp + 1;
 				}
+				
 			}
-			else
+			else 
 			{
-				if( execvp(args[0], args) == -1 )
+				vec_index++;
+				success++;
+				
+				if(execvp(argz[0], argz) < 0)
 				{
-					perror("exec");
+					perror("exec failure");
+					success;
 				}
 			}
 			
@@ -90,7 +112,7 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 				wait(0);
 			}
 		} 
-		else 	//Fork failed
+		else if(getpid() < 0)	//Fork failed
 		{
 			std::cout << "Fork error. Quitting Program." << std::endl;
 			
