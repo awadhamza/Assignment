@@ -21,39 +21,43 @@ using namespace std;
  */
 
 
-char* Execute::makeCharPointers(vector<CMD*> CMDlist)
+void Execute::makeCharPointers(vector<CMD*> CMDlist)
 {
-	for(unsigned j = 0; j < CMDlist.size(); j++){
+	for(unsigned j = 0; j < CMDlist.size(); j++){ //Goes through every CMD object
 		
-		Tokenizer token(CMDlist.at(j)->getInstruction());
+		Tokenizer token(CMDlist.at(j)->getInstruction());		//Gets its string
 		
 		string currentWord;
-		char* argArray[CMDlist.at(j)->getInstruction().size()];
+		char* newCMD = new char[CMDlist.at(j)->getInstruction().size() + 1];		// + 1 for a null pointer at the end
 		int i = 0;
 		
-		while((currentWord = token.next()) != "")	//Iteratees to next word in array
+		while((currentWord = token.next()) != "")	//Iteratees to next word in string
 		{
 			
 			
-			while(argArray[i]){
-				i++;
+			for(unsigned j = 0; j < currentWord.size(); j++)
+			{
+				
+				newCMD[i + j] = currentWord.at(j);
+				
 			}
 			
-			argArray[i] = (char*)currentWord.c_str();
-			
+			executables[executablesSize] = newCMD;
+						
 		}
 		
-		executables[executablesSize] = new char(argArray);
-		executablesSize++;
-		
-		for(int j = 0; argArray[j]; j++) {
-			argArray[j] = 0;
-		}
 	}
 	
 }
 
-Execute::~Execute() {}
+Execute::~Execute() 
+{
+	while(executablesSize)
+	{
+		delete executables[executablesSize];
+	}
+	delete executables[executablesSize]; //this is because of design implementation
+}
 
 void Execute::execute(std::vector<CMD*> CMDlist)
 {
