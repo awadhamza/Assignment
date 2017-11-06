@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Command.hh"
+#include "src/Command.hh"
 
 #ifndef Menu_hh
 #define Menu_hh

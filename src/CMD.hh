@@ -1,7 +1,7 @@
 #ifndef CMD_HH
 #define CMD_HH
 
-#include "Command.hh"
+#include "src/Command.hh"
 #include <iostream>
 
 class CMD {
