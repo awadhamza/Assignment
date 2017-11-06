@@ -1,4 +1,4 @@
-#include "Menu.hh"
+#include "src/Menu.hh"
 
 Menu::Menu() : returnCMD("") {}
 

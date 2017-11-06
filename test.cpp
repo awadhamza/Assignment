@@ -1,4 +1,4 @@
-#include "Interface.hh"
+#include "src/Interface.hh"
 
 int main()
 {

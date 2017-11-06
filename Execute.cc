@@ -1,50 +1,70 @@
-#include "Execute.hh"
+#include "src/Execute.hh"
 #include <unistd.h>		//Grants executeable ability
 #include <stdio.h>		//Grants error checking output
 #include <iostream>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include "Tokenizer.h"
+#include "src/Tokenizer.h"
 
 using namespace std;
 
-char* makeCharPointers(string instruc)
+/*
+ * Note to self
+ * 
+	string str = "string";
+	char *cstr = new char[str.length() + 1];
+	strcpy(cstr, str.c_str());
+	
+	// do stuff
+	delete [] cstr;
+ *  
+ */
+
+
+char* Execute::makeCharPointers(vector<CMD*> CMDlist)
 {
-	Tokenizer token(instruc);
-	
-	string currentWord;
-	char* argArray[1024];
-	int i = 0;
-	
-	while((currentWord = token.next()) != "")
-	{
+	for(unsigned j = 0; j < CMDlist.size(); j++){
 		
+		Tokenizer token(CMDlist.at(j)->getInstruction());
 		
-		while(argArray[i]){
-			i++;
+		string currentWord;
+		char* argArray[CMDlist.at(j)->getInstruction().size()];
+		int i = 0;
+		
+		while((currentWord = token.next()) != "")	//Iteratees to next word in array
+		{
+			
+			
+			while(argArray[i]){
+				i++;
+			}
+			
+			argArray[i] = (char*)currentWord.c_str();
+			
 		}
 		
-		argArray[i] = (char*)currentWord.c_str();
+		executables[executablesSize] = new char(argArray);
+		executablesSize++;
 		
-	}
-	
-	for(int j = 0; argArray[j]; j++) {
-		argArray[j] = 0;
+		for(int j = 0; argArray[j]; j++) {
+			argArray[j] = 0;
+		}
 	}
 	
 }
-
-int vec_index = 0;
-int success = 0;
-
-Execute::Execute() {}
 
 Execute::~Execute() {}
 
 void Execute::execute(std::vector<CMD*> CMDlist)
 {
-	
-	
+	int vec_index = 0;
+	int success = 0;
+
+	//for( unsigned i = 0; i < CMDlist.size(); i++)
+	//{
+	//	cout << CMDlist.at(i)->getInstruction() << " " << i << " ===== ";
+	//}
+	//cout << endl;
 	
 	for( vec_index; vec_index < CMDlist.size(); ++vec_index )
 	{
@@ -52,8 +72,7 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 		pid_t pid = fork();
 		
 		std::string currCommand = CMDlist.at(vec_index)->getInstruction();
-		
-		char* argz[1024] = {makeCharPointers(currCommand)};
+		char** argz;
 			
 		if(pid == 0) //Child process
 		{

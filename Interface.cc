@@ -1,6 +1,6 @@
-#include "Interface.hh"
-#include "Menu.hh"
-#include "Execute.hh"
+#include "src/Interface.hh"
+#include "src/Menu.hh"
+#include "src/Execute.hh"
 
 Interface::Interface() {}
 
@@ -16,11 +16,15 @@ void Interface::orchestrate()
 		
 		menu->getPrompt();
 		command->splitString(menu->accessString());
+		eggsocute->makeCharPointers(command->getVector());
 		eggsocute->execute(command->getVector());
 		
 		delete menu;
+		menu = 0;
 		delete command;
+		command = 0;
 		delete eggsocute;
+		eggsocute = 0;
 	}
 	return;
 }
