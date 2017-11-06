@@ -2,9 +2,9 @@
 #define EXECUTE_HH
 
 #include <string>
-
 #include <vector>
-#include "CMD.hh"
+
+#include "src/CMD.hh"
 
 class Execute {
 	private:
@@ -14,7 +14,7 @@ class Execute {
 		Execute();
 		~Execute();
 		void execute(std::vector<CMD*> );
-		char* makeCharPointers(std::vector<CMD*> );
+		void makeCharPointers(std::vector<CMD*> );
 		
 };
 
