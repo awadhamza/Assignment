@@ -1,8 +1,9 @@
 #ifndef Command_hh
 #define Command_hh
 
-#include "src/Interface.hh"
-#include "src/CMD.hh"
+#include "Interface.hh"
+#include "Tokenizer.h"
+#include "CMD.hh"
 #include <vector>
 #include <iostream>
 

@@ -1,8 +1,9 @@
 #ifndef CMD_HH
 #define CMD_HH
 
-#include "src/Command.hh"
+//#include "Command.hh"
 #include <iostream>
+#include <vector>
 
 class CMD {
 	private:

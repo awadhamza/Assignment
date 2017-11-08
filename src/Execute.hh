@@ -4,12 +4,19 @@
 #include <string>
 #include <vector>
 
-#include "src/CMD.hh"
+#include <unistd.h>		//Grants executeable ability
+#include <stdio.h>		//Grants error checking output
+#include <iostream>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include "Tokenizer.h"
+
+#include "CMD.hh"
 
 class Execute {
 	private:
-		char** executables;
-		int executablesSize = 0;
+		char** executables[1024];
+		int executablesSize = 0; //The index
 	public:
 		Execute();
 		~Execute();
