@@ -1,10 +1,4 @@
 #include "src/Execute.hh"
-#include <unistd.h>		//Grants executeable ability
-#include <stdio.h>		//Grants error checking output
-#include <iostream>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include "src/Tokenizer.h"
 
 using namespace std;
 
@@ -23,6 +17,7 @@ using namespace std;
 
 void Execute::makeCharPointers(vector<CMD*> CMDlist)
 {
+	/*
 	for(unsigned j = 0; j < CMDlist.size(); j++){ //Goes through every CMD object
 		
 		Tokenizer token(CMDlist.at(j)->getInstruction());		//Gets its string
@@ -47,6 +42,10 @@ void Execute::makeCharPointers(vector<CMD*> CMDlist)
 		}
 		
 	}
+	* */
+	
+	//new Implementation
+	
 	
 }
 

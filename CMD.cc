@@ -1,5 +1,4 @@
 #include "src/CMD.hh"
-#include <vector>
 
 CMD::CMD() : instruction(""), connector(0) {}
 
