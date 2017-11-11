@@ -10,7 +10,7 @@ Command::~Command()
 	for(unsigned i = CMDlist.size(); i > CMDlist.size(); --i)
 	{
 		delete CMDlist.at(i);
-		CMDlist.at(i) = nullptr;
+		CMDlist.at(i) = 0;
 		CMDlist.pop_back();
 	}
 }

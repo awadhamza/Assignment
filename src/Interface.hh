@@ -11,7 +11,7 @@ class Interface {
       Interface();
       ~Interface();
       void changeConVec(vector<int>);
-      void changeCommandVec(vector<vector<char*>>);
+      void changeCommandVec(vector<vector<char*> >);
       void orchestrate();
 };
 

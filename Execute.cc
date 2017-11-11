@@ -24,21 +24,30 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 	
 	for( vec_index; vec_index < CMDlist.size(); ++vec_index )
 	{
-			
+		
+		string completeCommand = CMDlist.at(vec_index) -> getInstruction();
+		char splitCommand[1024];
+  		char *executables[1024];
+  		int charSize = completeCommand.size();
+  		char* addLetter = NULL;
+ 		int i = 0;
+  		int executablesIndex = 0;
+  
+  		for (unsigned int j = 0; j < completeCommand.size(); j++){
+    			splitCommand[j] = completeCommand[j];
+  		}
+  
+  		splitCommand[charSize + 1] = '0';
+  
+  		addLetter = strtok(splitCommand, " " );
+  
+  		while(addLetter != NULL){
+    			executables[i++] = addLetter;
+    			addLetter = strtok(NULL, " ");
+   			executablesIndex++;
+  		}
+
 		pid_t pid = fork();
-		
-		//std::string currCommand = CMDlist.at(vec_index)->getInstruction();
-		
-		//const char* argsChar = (CMDlist.at(vec_index)->getInstruction());
-		//char* const* args = argsChar;
-		//char* first = &argsChar[0];
-		string argsChar = (CMDlist.at(vec_index)->getInstruction());
-		
-		vector<char> VectoChar(argsChar.length() + 1);
-		strcpy(&VectoChar[0], argsChar.c_str());
-		char* argsVec = &VectoChar[0];
-		const char* first = &argsVec[0];
-		char* const* args = &argsVec;
 		
 		if(pid < 0) //fork failed
 		{
@@ -51,7 +60,8 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 			
 		} else //child process
 		{
-			execvp(first, args);
+			//cout << "this is it: " << first << endl;
+			execvp(splitCommand, executables);
 			/*
 			if(CMDlist.at(vec_index)->getConnector() == 3) // && connector
 			{
