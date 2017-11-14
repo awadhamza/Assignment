@@ -1,4 +1,10 @@
 #include "src/Command.hh"
+<<<<<<< HEAD
+=======
+#include "src/Interface.hh"
+
+#include "src/Tokenizer.h"
+>>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 #include <vector>
 #include <string>
 
@@ -7,7 +13,7 @@ Command::~Command()
 	for(unsigned i = CMDlist.size(); i > CMDlist.size(); --i)
 	{
 		delete CMDlist.at(i);
-		CMDlist.at(i) = nullptr;
+		CMDlist.at(i) = 0;
 		CMDlist.pop_back();
 	}
 }

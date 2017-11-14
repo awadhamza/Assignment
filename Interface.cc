@@ -1,8 +1,19 @@
 #include "src/Interface.hh"
+<<<<<<< HEAD
+=======
+#include "src/Menu.hh"
+#include "src/Execute.hh"
+>>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 
-Interface::Interface() {}
+using std::vector;
+using std::cout;
+using std::endl;
+using std::cin;
+
+Interface::Interface(){}
 
 Interface::~Interface() {}
+
 
 void Interface::orchestrate()
 {
