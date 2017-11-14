@@ -10,10 +10,8 @@
 
 
 using namespace std;
->>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 
 using namespace std;
->>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 
 using namespace std;
 
@@ -29,48 +27,13 @@ using namespace std;
  *  
  */
 
-
-void Execute::makeCharPointers(vector<CMD*> CMDlist)
+Execute::Execute()
 {
-	/*
-	for(unsigned j = 0; j < CMDlist.size(); j++){ //Goes through every CMD object
-		
-		Tokenizer token(CMDlist.at(j)->getInstruction());		//Gets its string
-		
-		string currentWord;
-		char* newCMD = new char[CMDlist.at(j)->getInstruction().size() + 1];		// + 1 for a null pointer at the end
-		int i = 0;
-		
-		while((currentWord = token.next()) != "")	//Iteratees to next word in string
-		{
-			
-			
-			for(unsigned j = 0; j < currentWord.size(); j++)
-			{
-				
-				newCMD[i + j] = currentWord.at(j);
-				
-			}
-			
-			executables[executablesSize] = newCMD;
-						
-		}
-		
-	}
-	* */
-	
-	//new Implementation
-	
-	
 }
 
 Execute::~Execute() 
 {
-	while(executablesSize)
-	{
-		delete executables[executablesSize];
-	}
-	delete executables[executablesSize]; //this is because of design implementation
+
 }
 
 void Execute::execute(std::vector<CMD*> CMDlist)
@@ -86,18 +49,11 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 	
 	for( vec_index; vec_index < CMDlist.size(); ++vec_index )
 	{
-<<<<<<< HEAD
-<<<<<<< HEAD
 		int temp = 0;	
-		pid_t pid = fork();
 		
 		std::string currCommand = CMDlist.at(vec_index)->getInstruction();
 		char** argz;
-=======
 		
-=======
-		
->>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 		string completeCommand = CMDlist.at(vec_index) -> getInstruction();
 		char splitCommand[1024];
   		char *executables[1024];
@@ -125,16 +81,9 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 		if(pid < 0) //fork failed
 		{
 			std::cout << "Fork error. Quitting Program." << std::endl;
-<<<<<<< HEAD
->>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
-			
+
 			exit(-1);
 			
-=======
-			
-			exit(-1);
-			
->>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 		} else if (pid > 0) //parent process
 		{
 			

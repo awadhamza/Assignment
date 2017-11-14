@@ -24,7 +24,6 @@ void Interface::orchestrate()
 		
 		menu->getPrompt();
 		command->splitString(menu->accessString());
-		eggsocute->makeCharPointers(command->getVector());
 		eggsocute->execute(command->getVector());
 		
 		delete menu;
