@@ -1,10 +1,11 @@
 #include "src/Command.hh"
-<<<<<<< HEAD
-=======
+
 #include "src/Interface.hh"
 
 #include "src/Tokenizer.h"
->>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
+#include "src/Interface.hh"
+
+#include "src/Tokenizer.h"
 #include <vector>
 #include <string>
 

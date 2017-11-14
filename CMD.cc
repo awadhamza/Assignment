@@ -1,11 +1,8 @@
 #include "src/CMD.hh"
-<<<<<<< HEAD
-=======
 #include <vector>
 #include <sstream>
 
 using namespace std;
->>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 
 CMD::CMD() : instruction(""), connector(0) {}
 

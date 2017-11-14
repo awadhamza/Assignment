@@ -1,6 +1,4 @@
 #include "src/Execute.hh"
-<<<<<<< HEAD
-=======
 #include <unistd.h>		//Grants executeable ability
 #include <stdio.h>		//Grants error checking output
 #include <stdlib.h>
@@ -9,6 +7,10 @@
 #include <sys/types.h>
 #include "src/Tokenizer.h"
 #include <string.h>
+
+
+using namespace std;
+>>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 
 using namespace std;
 >>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
@@ -85,6 +87,7 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 	for( vec_index; vec_index < CMDlist.size(); ++vec_index )
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int temp = 0;	
 		pid_t pid = fork();
 		
@@ -92,6 +95,9 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 		char** argz;
 =======
 		
+=======
+		
+>>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 		string completeCommand = CMDlist.at(vec_index) -> getInstruction();
 		char splitCommand[1024];
   		char *executables[1024];
@@ -119,10 +125,16 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 		if(pid < 0) //fork failed
 		{
 			std::cout << "Fork error. Quitting Program." << std::endl;
+<<<<<<< HEAD
 >>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 			
 			exit(-1);
 			
+=======
+			
+			exit(-1);
+			
+>>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 		} else if (pid > 0) //parent process
 		{
 			
@@ -177,12 +189,15 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 			if(CMDlist.at(vec_index)->getConnector() == 3)
 			{
 <<<<<<< HEAD
+<<<<<<< HEAD
 				success++;
 				vec_index++;
 				
 				if(execvp(argz[0], argz) < 0){
 					perror("exec failed");
 =======
+=======
+>>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 				if( execvp(first, args) == -1 ) // if a command with a && failed
 				{			
 					success--;		
@@ -195,6 +210,7 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 					//vec_index++; //for offset
 					success--;
 					
+<<<<<<< HEAD
 <<<<<<< HEAD
 				}
 			}
@@ -214,6 +230,12 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 			}
 			else if (CMDlist.at(vec_index)->getConnector() == 2)
 			{
+=======
+				}		
+			}
+			else if (CMDlist.at(vec_index)->getConnector() == 2)
+			{
+>>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 				int tempVecIndex = vec_index;
 				
 				while(CMDlist.at(vec_index)->getConnector() == 2)
@@ -231,6 +253,9 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 			else if (CMDlist.at(vec_index)->getConnector() == 1)
 			{
 				if( execvp(first, args) == -1 )
+<<<<<<< HEAD
+>>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
+=======
 >>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 				{
 					perror("exec failure");
@@ -242,10 +267,14 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 			else 
 			{
 <<<<<<< HEAD
+<<<<<<< HEAD
 				vec_index++;
 				success++;
 				
 				if(execvp(argz[0], argz) < 0)
+=======
+				if( execvp(first, args) == -1 )
+>>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
 =======
 				if( execvp(first, args) == -1 )
 >>>>>>> 1e26fa27506eab6ebae24c8f64719c1f37984368
