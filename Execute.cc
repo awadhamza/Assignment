@@ -90,24 +90,63 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 		} else //child process
 		{
 			//cout << "this is it: " << first << endl;
-			execvp(splitCommand, executables);
-			/*
-			if(CMDlist.at(vec_index)->getConnector() == 3) // && connector
+			//execvp(splitCommand, executables);
+			
+			//====================================
+			
+			int temp = vec_index;
+			
+			if(CMDlist.at(vec_index)->getConnector() == 2)
 			{
-				execvp(args[0], args);
-			} 
-			else if (CMDlist.at(vec_index)->getConnector() == 2) // || connector
-			{
+				perror("invalid command");
+				while(CMDlist.at(vec_index)->getConnector() == 2)
+				{
+					vec_index++;
+				}
+				success++;
 				
+				if(execvp(splitCommand, executables) == -1)
+				{
+					vec_index = temp + 1;
+					success--;
+				}
+			} else if (CMDlist.at(vec_index)->getConnector() == 3)
+			{
+				success++;
+				vec_index++;
+				if(execvp(splitCommand, executables) == -1)
+				{
+					perror("invalid command");
+					vec_index--;
+					while(CMDlist.at(vec_index)->getConnector() == 3)
+					{
+						vec_index++;
+					}
+					success--;
+				}
+			} else {
+				vec_index++;
+				success++;
+				
+				if(execvp(splitCommand, executables) == -1)
+				{
+					perror("invalid command");
+					success--;
+				}
 			}
-			else // ';' or ""
-			{
-				
-				
-				
-			} */
+			
+			while(success){
+				wait(0);
+				success--;
+			}
+			
+			//=================================================
 		}
 	}
+	
+	
+	
+	
 	wait(0);
 		/*
 		for(int i = 0; i < argsChar.length(); i++){
