@@ -53,8 +53,20 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 	//	cout << CMDlist.at(i)->getInstruction() << " " << i << " ===== ";
 	//}
 	//cout << endl;
+
+	
+	
+	
 	for( vec_index; vec_index < CMDlist.size(); ++vec_index )
-	{
+	{	
+		if(CMDlist.at(vec_index)->getInstruction() == "exit")
+		{
+			exit(0);
+		} else if (CMDlist.at(vec_index)->getInstruction().size() == 0)
+		{
+			perror("Enter a command");
+			return;
+		}
 		int temp = 0;	
 		
 		std::string currCommand = CMDlist.at(vec_index)->getInstruction();
@@ -126,7 +138,7 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 					
 				} else if (CMDlist.at(vec_index)->getConnector() == 2)	//If "||" connector
 				{
-					cout << "ITS DOING IT" << endl;
+					//cout << "ITS DOING IT" << endl;
 					CMDlist.at(vec_index)->setDone(2); //Setting to true if it will work
 					while(CMDlist.at(vec_index)->getConnector() == 2)
 					{
@@ -136,19 +148,20 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 					CMDlist.at(vec_index)->setDone(2);
 					vec_index++;	//Offset
 					
-					cout << CMDlist.at(indexSave)->getDone() << " is the done status for the current CMD" << endl;
+					//cout << CMDlist.at(indexSave)->getDone() << " is the done status for the current CMD" << endl;
 					
 					execvp(splitCommand, executables); //If success, parent should iterate to the next one
 					
 					//If failed, will set done to 1
 					CMDlist.at(vec_index)->setDone(1); //Setting to false since failed and parent should go to next
 					vec_index = indexSave;
+					exit(0);
 					while(CMDlist.at(vec_index)->getConnector() == 2)
 					{
 						CMDlist.at(vec_index)->setDone(0);
 						vec_index++;
 					}
-					cout << "ITS DONE" << endl;
+					//cout << "ITS DONE" << endl;
 					exit(0);
 					
 				} else { //if ';' or ''
@@ -256,18 +269,20 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 			
 		} else //parent process
 		{
-			for(unsigned i = 0; i < CMDlist.size() - 1; i++)
-			{
-				wait(NULL);
-			}
+			int status = 0;
+			while ((pid = wait(&status)) > 0);
+			//for(unsigned i = 0; i < CMDlist.size() - 1; i++)
+			//{
+			//	wait(NULL);
+			//}
 		}
 	}
 	
 	
-	
-	for(unsigned i = 0; i < CMDlist.size(); ++i){
-		cout << CMDlist.at(i)->getDone() << endl;
-	}
+	//THIS VERY IMPORTANT TEST FAILS, WHICH RUINS OUR IDEA OF CHILD TO PARENT CONNECTED MEMORY
+	//for(unsigned i = 0; i < CMDlist.size(); ++i){
+	//	cout << CMDlist.at(i)->getDone() << endl;
+	//}
 	
 		/*
 		for(int i = 0; i < argsChar.length(); i++){
