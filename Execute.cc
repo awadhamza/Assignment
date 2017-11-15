@@ -36,6 +36,13 @@ Execute::~Execute()
 
 }
 
+void Execute::doThis(char[] , char*[])
+{
+	
+	
+	
+}
+
 void Execute::execute(std::vector<CMD*> CMDlist)
 {
 	int vec_index = 0;
@@ -46,7 +53,6 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 	//	cout << CMDlist.at(i)->getInstruction() << " " << i << " ===== ";
 	//}
 	//cout << endl;
-	
 	for( vec_index; vec_index < CMDlist.size(); ++vec_index )
 	{
 		int temp = 0;	
@@ -65,7 +71,7 @@ void Execute::execute(std::vector<CMD*> CMDlist)
   		for (unsigned int j = 0; j < completeCommand.size(); j++){
     			splitCommand[j] = completeCommand[j];
   		}
-  
+  		
   		splitCommand[charSize + 1] = '0';
   
   		addLetter = strtok(splitCommand, " " );
@@ -84,19 +90,120 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 
 			exit(-1);
 			
-		} else if (pid > 0) //parent process
+		} else if(pid == 0)//child process
 		{
+					
 			
-		} else //child process
-		{
+			//for(unsigned i = 0; i < CMDlist.size(); ++i){
+			//	cout << CMDlist.size() << endl;
+			//	cout << CMDlist.at(i)->getInstruction() << endl;
+			//	CMDlist.at(i)->setDone(45);
+			//}
+			
 			//cout << "this is it: " << first << endl;
 			//execvp(splitCommand, executables);
 			
-			//====================================
+			int indexSave = vec_index; //Incase we need it
+			
+			if(CMDlist.at(vec_index)->getDone() == 0)	//-------------------------------If this command is unchecked
+			{
+				if(CMDlist.at(vec_index)->getConnector() == 3)	//If "&&" connector
+				{
+					
+					CMDlist.at(vec_index)->setDone(2); //Setting to true if it will work
+					execvp(splitCommand, executables); //If success, parent should iterate to the next one
+					
+					//If failed, will set done to 1
+					CMDlist.at(vec_index)->setDone(1); //Setting to false since failed
+					while(CMDlist.at(vec_index)->getConnector() == 3)
+					{
+						CMDlist.at(vec_index)->setDone(1);
+						vec_index++;
+					}
+					CMDlist.at(vec_index)->setDone(1);
+					vec_index++;	//Offset
+					exit(0);
+					
+				} else if (CMDlist.at(vec_index)->getConnector() == 2)	//If "||" connector
+				{
+					cout << "ITS DOING IT" << endl;
+					CMDlist.at(vec_index)->setDone(2); //Setting to true if it will work
+					while(CMDlist.at(vec_index)->getConnector() == 2)
+					{
+						CMDlist.at(vec_index)->setDone(2);
+						vec_index++;
+					}
+					CMDlist.at(vec_index)->setDone(2);
+					vec_index++;	//Offset
+					
+					cout << CMDlist.at(indexSave)->getDone() << " is the done status for the current CMD" << endl;
+					
+					execvp(splitCommand, executables); //If success, parent should iterate to the next one
+					
+					//If failed, will set done to 1
+					CMDlist.at(vec_index)->setDone(1); //Setting to false since failed and parent should go to next
+					vec_index = indexSave;
+					while(CMDlist.at(vec_index)->getConnector() == 2)
+					{
+						CMDlist.at(vec_index)->setDone(0);
+						vec_index++;
+					}
+					cout << "ITS DONE" << endl;
+					exit(0);
+					
+				} else { //if ';' or ''
+					
+					CMDlist.at(vec_index)->setDone(2);	//Success
+					execvp(splitCommand, executables);
+					
+					CMDlist.at(vec_index)->setDone(1);	//Failure
+					exit(0);
+					
+				}
+			} else if (CMDlist.at(vec_index)->getDone() == 1) //------------------------If this command had failed
+			{
+				if(CMDlist.at(vec_index)->getConnector() == 3)
+				{
+					
+					while(CMDlist.at(vec_index)->getConnector() == 3){
+						vec_index++;
+					}
+					
+				} else if (CMDlist.at(vec_index)->getConnector() == 2){
+					//Don't offset or do anything, the forloop will iterate
+				} else {
+					//Don't offset or do anything, the forloop will iterate
+				}
+			} else if (CMDlist.at(vec_index)->getDone() == 2) //-----------------------If this command had succeeded
+			{
+				if(CMDlist.at(vec_index)->getConnector() == 3)
+				{
+					
+					//Don't offset or do anything, the forloop will iterate
+					
+				} else if (CMDlist.at(vec_index)->getConnector() == 2){
+					
+					while(CMDlist.at(vec_index)->getConnector() == 3){
+						vec_index++;
+					}
+					
+				} else {
+					//Don't offset or do anything, the forloop will iterate
+				}
+			}
+			
+			
+			
+			
+			
+			
+			//==================================== Last Working Version
+			/*
+			
 			
 			int temp = vec_index;
 			
-			if(CMDlist.at(vec_index)->getConnector() == 2)
+			if(CMDlist.at(vec_index)->getConnector() == 2)	//OR connector
 			{
 				perror("invalid command");
 				while(CMDlist.at(vec_index)->getConnector() == 2)
@@ -110,7 +217,7 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 					vec_index = temp + 1;
 					success--;
 				}
-			} else if (CMDlist.at(vec_index)->getConnector() == 3)
+			} else if (CMDlist.at(vec_index)->getConnector() == 3)	//AND connector
 			{
 				success++;
 				vec_index++;
@@ -122,9 +229,10 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 					{
 						vec_index++;
 					}
+					
 					success--;
 				}
-			} else {
+			} else {	// ';' or newline
 				vec_index++;
 				success++;
 				
@@ -136,18 +244,31 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 			}
 			
 			while(success){
+				cout << success << " ";
 				wait(0);
 				success--;
 			}
-			
+			cout << endl;
+			*/
 			//=================================================
+			
+			
+			
+		} else //parent process
+		{
+			for(unsigned i = 0; i < CMDlist.size() - 1; i++)
+			{
+				wait(NULL);
+			}
 		}
 	}
 	
 	
 	
+	for(unsigned i = 0; i < CMDlist.size(); ++i){
+		cout << CMDlist.at(i)->getDone() << endl;
+	}
 	
-	wait(0);
 		/*
 		for(int i = 0; i < argsChar.length(); i++){
 			cout << "DIS TING " << args[i] << endl;
