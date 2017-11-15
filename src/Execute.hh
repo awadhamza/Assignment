@@ -12,7 +12,9 @@ class Execute {
 	public:
 		Execute();
 		~Execute();
+		void doThis(char[] , char*[]);
 		void execute(vector<CMD*> );
+		
 		
 };
 

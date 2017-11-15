@@ -4,13 +4,27 @@
 
 using namespace std;
 
-CMD::CMD() : instruction(""), connector(0) {}
+CMD::CMD() : instruction(""), connector(0), done(0) {}
 
 
-CMD::CMD(std::string instruction, int connector) : instruction(instruction), connector(connector) {}
+CMD::CMD(std::string instruction, int connector) : instruction(instruction), connector(connector), done(0) {}
 
 int CMD::getConnector(){
 	return connector;
+}
+
+void CMD::changeConnector(int newConnector){
+	connector = newConnector;
+	return;
+}
+
+int CMD::getDone(){
+	return done;
+}
+
+void CMD::setDone(int newDone){
+	done = newDone;
+	return;
 }
 
 string CMD::getInstruction(){

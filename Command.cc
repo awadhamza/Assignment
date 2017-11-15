@@ -35,7 +35,8 @@ int Command::checkConnector(std::string conString){
 }
 
 std::string Command::cutConnector(std::string cutString){
-        return cutString.substr(0, cutString.size() - 1);
+	std::string temp = cutString.substr(0, cutString.size() - 1);
+        return temp;
 }
 
 void Command::splitString(std::string instruction){
@@ -60,7 +61,12 @@ void Command::splitString(std::string instruction){
                 else{
                         if(connection == 1){
                                 currCommand = cutConnector(currCommand);
-                                basket += " " + currCommand;
+                                if(basket == ""){
+										basket = currCommand;
+								}
+								else{
+									basket += " " + currCommand;
+								}
 			}
 			
 			temp = new CMD(basket, connection);
@@ -78,6 +84,10 @@ void Command::splitString(std::string instruction){
 	//		  {
 	//			  std::cout << CMDlist.at(i)->getInstruction() << std::endl;
 	//		  }
+	if(instruction.at(instruction.size() - 1) == ';'){
+		CMDlist.pop_back();
+	}
+	CMDlist.at(CMDlist.size() - 1) -> changeConnector(0);
 }
 
 std::vector<CMD*> Command::getVector()
