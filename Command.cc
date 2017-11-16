@@ -46,7 +46,10 @@ void Command::splitString(std::string instruction){
         std::string currCommand;
         std::string basket = "";
 	CMD* temp;
-
+		if(instruction == ""){
+			CMDlist.push_back(new CMD(instruction, 0));
+			return;
+		}
         while((currCommand = splitter.next()) != "")
         {
                 connection = checkConnector(currCommand);
@@ -76,14 +79,7 @@ void Command::splitString(std::string instruction){
 	}
 	temp = new CMD(basket, 0);
 	CMDlist.push_back(temp);
-	//TEST CASE BELOW!
-	//std::cout << "-----------------------------------------" << std::endl
-	//		  << "THE FINAL VECTOR SIZE FOR THIS PROMPT IS: " << CMDlist.size() << std::endl
-	//		  << "With these elements: " << std::endl;
-	//		  for(unsigned i = 0; i < CMDlist.size(); ++i)
-	//		  {
-	//			  std::cout << CMDlist.at(i)->getInstruction() << std::endl;
-	//		  }
+	
 	if(instruction.at(instruction.size() - 1) == ';'){
 		CMDlist.pop_back();
 	}
