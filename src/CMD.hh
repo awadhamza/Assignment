@@ -18,6 +18,8 @@ class CMD {
 		void changeConnector(int);
 		int getDone();
 		void setDone(int);
+		void execute();
+		int execute_fork(char[], char*[]);
 		std::string getInstruction();
 };
 

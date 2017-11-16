@@ -58,7 +58,7 @@ void CMD::execute(){
   		splitCommand[charSize + 1] = '0';
   
   		addLetter = strtok(splitCommand, " " );
-  
+  	
   		while(addLetter != NULL){
     		executables[i++] = addLetter;
     		addLetter = strtok(NULL, " ");
