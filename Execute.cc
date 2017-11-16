@@ -61,7 +61,11 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 			}
 		}
 	}
-
+	
+	for(unsigned i = 0; i < CMDlist.size(); i++)
+	{
+		CMDlist.pop_back();
+	}
 	
 	/*
 	
