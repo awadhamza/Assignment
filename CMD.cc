@@ -1,6 +1,13 @@
 #include "src/CMD.hh"
 #include <vector>
 #include <sstream>
+#include <unistd.h>		//Grants executeable ability
+#include <stdio.h>		//Grants error checking output
+#include <stdlib.h>
+#include <iostream>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <string.h>
 
 using namespace std;
 
@@ -27,25 +34,71 @@ void CMD::setDone(int newDone){
 	return;
 }
 
-string CMD::getInstruction(){
-	/*
-	istringstream inSS(instruction);
-	string curr = "";
-	vector<char*> v;
-	while(inSS >> curr){
-	   v.push_back((char*)curr.c_str());
-        }
-	
+void CMD::execute(){
+	if(instruction == "exit" || instruction.size() == 0)
+		{
+			exit(0);
+		}
+		
+		int temp = 0;	
+		
+		string completeCommand = instruction;
+		char splitCommand[1024];
+  		char *executables[1024];
+  		int charSize = completeCommand.size();
+  		char* addLetter = NULL;
+ 		int i = 0;
+  		int executablesIndex = 0;
+  
+  		for (unsigned int j = 0; j < completeCommand.size(); j++){
+    			splitCommand[j] = completeCommand[j];
+  		}
+  		
+  		//splitCommand[charSize] = ' ';
+  		splitCommand[charSize + 1] = '0';
+  
+  		addLetter = strtok(splitCommand, " " );
+  
+  		while(addLetter != NULL){
+    		executables[i++] = addLetter;
+    		addLetter = strtok(NULL, " ");
+   			executablesIndex++;
+  		}
+  		
+		//for (unsigned int k = 0; k < completeCommand.size() + 1; k++){
+    	//		cout << splitCommand[k] << endl;
+  		//}
+  		
+  		int commandStatus = execute_fork(splitCommand, executables); //0 if not checked, 1 if failed, and 2 if done correctly
+  		done = commandStatus;
+  		return;
+}
 
-//	char* args[25];
-	char* args;
-	for(int i = 0; i < v.size(); i++){
-		args[i] = *v.at(i);
-	}
-	args[v.size()] = 0;
-	return args;
-	*/
+int CMD::execute_fork(char splitCommand[], char* executables[]){
 	
-	//return instruction.c_str();
+	pid_t pid = fork();
+	
+	if(pid < 0) //fork failed
+		{
+			std::cout << "Fork error. Quitting Program." << std::endl;
+			exit(-1);
+		}
+	
+	else if(pid == 0)//child process
+		{
+			if(done == 0){
+				execvp(splitCommand, executables);
+				done = 1;
+			}
+			return done;
+		}
+	else{
+			wait(0);
+			done = 2;
+			return done;
+		}
+}
+
+string CMD::getInstruction(){
 	return instruction;
 }
