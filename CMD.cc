@@ -77,6 +77,11 @@ void CMD::execute(string execCommand, int testOrBrac){
   	int commandStatus = 0;
   	
   		if(execCommand == "fork"){
+			if(completeCommand.substr(0, 4) == "echo" && completeCommand.at(5) == '"' && completeCommand.at(completeCommand.size() - 1) == '"'){
+				string temp1 = completeCommand.substr(0, 5);
+				string temp2 = completeCommand.substr(6, completeCommand.size() - 7);
+				completeCommand = temp1 + temp2;
+			}	
 			for (unsigned int j = 0; j < completeCommand.size(); j++){
     			splitCommand[j] = completeCommand[j];
 			}
