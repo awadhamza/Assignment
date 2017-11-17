@@ -35,7 +35,7 @@ void CMD::setDone(int newDone){
 	return;
 }
 
-void CMD::execute(string execCommand){
+void CMD::execute(string execCommand, int testOrBrac){
 	while(execCommand.at(0) == ' '){
 		execCommand = execCommand.substr(1, execCommand.size() - 1);
 	}
@@ -44,30 +44,38 @@ void CMD::execute(string execCommand){
 	}
 	
 	if(instruction == "exit" || instruction.size() == 0)
-		{
-			exit(0);
-		}
+	{
+		exit(0);
+	}
 		
-		int temp = 0;	
+	int temp = 0;	
 		
-		string completeCommand = instruction;
-		char splitCommand[1024];
-  		char *executables[1024];
+	string completeCommand = instruction;
+	
+	while(completeCommand.at(0) == ' '){
+		completeCommand = completeCommand.substr(1, completeCommand.size() - 1);
+	}
+	while(completeCommand.at(completeCommand.size() - 1) == ' '){
+		completeCommand = completeCommand.substr(0, completeCommand.size() - 2);
+	}
+	
+	char splitCommand[1024];
+  	char *executables[1024];
 		
-		int count = 0;
-		while(count != 1024){
-			executables[count] = NULL;
-			count++;
-		}
-		memset(splitCommand, 0, 1023);
+	int count = 0;
+	while(count != 1024){
+		executables[count] = NULL;
+		count++;
+	}
+	memset(splitCommand, 0, 1023);
 
-  		int charSize = completeCommand.size();
-  		char* addLetter = NULL;
- 		int i = 0;
-  		int executablesIndex = 0;
-  		
-  		int commandStatus = 0;
-  		
+ 	int charSize = completeCommand.size();
+  	char* addLetter = NULL;
+ 	int i = 0;
+  	int executablesIndex = 0;
+  	
+  	int commandStatus = 0;
+  	
   		if(execCommand == "fork"){
 			for (unsigned int j = 0; j < completeCommand.size(); j++){
     			splitCommand[j] = completeCommand[j];
@@ -89,6 +97,22 @@ void CMD::execute(string execCommand){
 		else if(execCommand == "stat"){
 			char flag;
 			unsigned int p = 0;
+			if((completeCommand.at(completeCommand.size() - 1) != ']' || completeCommand.at(completeCommand.size() - 2) != ' ') && testOrBrac == 5){
+				cout << "missing ']'" << endl;
+				exit(0);
+			}
+			else if (testOrBrac == 5){
+				completeCommand = completeCommand.substr(0, completeCommand.size() - 2);
+				while(completeCommand.at(0) == ' '){
+					completeCommand = completeCommand.substr(1, completeCommand.size() - 1);
+				}
+				while(completeCommand.at(completeCommand.size() - 1) == ' '){
+					completeCommand = completeCommand.substr(0, completeCommand.size() - 2);
+				}
+			}
+			
+			//cout << "this string: " << completeCommand << endl;
+			
 			for (unsigned int j = 0; j < completeCommand.size(); j++){
 				if(j == 0 && completeCommand[j] == '-'){
 					flag = completeCommand[j + 1];
@@ -130,57 +154,56 @@ int CMD::execute_fork(char splitCommand[], char* executables[]){
 
 int CMD::execute_stat(char splitCommand[], char flag){
 	
-	struct stat buf;
-	//Note to self stat constructor arguments: stat(char a[], reference to struct)
-	
-	stat(splitCommand, &buf);
-	//for(int p = 0; p < 20; p++){
-	//	cout << splitCommand[p];
-	//}
-	//cout << endl;
-	if(flag == 'e')
-	{
-		if( S_ISREG( buf.st_mode ) != 0 || S_ISDIR( buf.st_mode ) != 0)
-		{
-			cout << "(True)" << endl << "path exists" << endl;
-			return 2;
-		}
-		else
-		{
-			cout << "(False)" << endl << "path doesn't exist" << endl;
-			return 1;
-		}
-	}
-	else if (flag == 'f')
-	{
-		if( S_ISREG( buf.st_mode ) != 0 )
-		{
-			cout << "(True)" << endl << "path exists" << endl;
-			return 2;
-		}
-		else
-		{
-			cout << "(False)" << endl << "path doesn't exist" << endl;
-			return 1;
-		}
-	}
-	else     //flag == 'd'
-	{
-		if( S_ISDIR( buf.st_mode ) != 0 )
-		{
-			cout << "(True)" << endl << "path exists" << endl;
-			return 2;
-		}
-		else
-		{
-			cout << "(False)" << endl << "path doesn't exist" << endl;
-			return 1;
-		}
-	}
+		struct stat buf;
+		//Note to self stat constructor arguments: stat(char a[], reference to struct)
 		
-	cout << "DIDN'T DETECT FLAG" << endl;
-	return 0;
-	
+		stat(splitCommand, &buf);
+		if(flag == 'e')
+		{
+			if( S_ISREG( buf.st_mode ) != 0 || S_ISDIR( buf.st_mode ) != 0)
+			{
+				cout << "(True)" << endl;
+				return 2;
+			}
+			else
+			{
+				cout << "(False)" << endl;
+				return 1;
+			}
+		}
+		else if (flag == 'f')
+		{
+			if( S_ISREG( buf.st_mode ) != 0 )
+			{
+				cout << "(True)" << endl;
+				return 2;
+			}
+			else
+			{
+				cout << "(False)" << endl;
+				return 1;
+			}
+		}
+		else     //flag == 'd'
+		{
+			if( S_ISDIR( buf.st_mode ) != 0 )
+			{
+				cout << "(True)" << endl;
+				return 2;
+			}
+			else
+			{
+				cout << "(False)" << endl;
+				return 1;
+			}
+		}
+			
+		cout << "DIDN'T DETECT FLAG" << endl;
+	//}
+	//else {
+	//	wait(0);
+		return 0;
+	//}
 }
 
 string CMD::getInstruction(){
