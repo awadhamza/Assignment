@@ -20,7 +20,7 @@ Command::~Command()
 }
 
 int Command::checkConnector(std::string conString){
-	if(conString.size() == 1){
+	if(conString.size() <= 1){
 		return 0;
 	}
         if(conString.at(conString.size() - 1) == '&' && conString.at(conString.size() - 2) == '&'){
