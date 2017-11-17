@@ -20,11 +20,8 @@ Command::~Command()
 }
 
 int Command::checkConnector(std::string conString){
-	if(conString.size() <= 1){
-		if(conString == "[" || conString == "test"){
-			return 4;
-		}
-		return 0;
+	if((conString == "[" && conString.size() == 1) || (conString == "test" && conString.size() == 4)){
+		return 4;
 	}
         if(conString.at(conString.size() - 1) == '&' && conString.at(conString.size() - 2) == '&'){
                 return 3;
@@ -32,8 +29,8 @@ int Command::checkConnector(std::string conString){
         else if(conString.at(conString.size() - 1) == '|' && conString.at(conString.size() - 2) == '|'){
                 return 2;
         }
-        else if(conString.at(conString.size() - 1) == ';'){
-                return 1;
+        else if(conString.at(conString.size() - 1) == ';' || conString.at(conString.size() - 1) == ']'){
+		return 1;
         }
         else{
                 return 0;
@@ -41,8 +38,14 @@ int Command::checkConnector(std::string conString){
 }
 
 std::string Command::cutConnector(std::string cutString){
-	std::string temp = cutString.substr(0, cutString.size() - 1);
-        return temp;
+	std::string temp;
+	if(cutString == "]"){
+		temp = cutString;
+	}
+	else{
+		temp = cutString.substr(0, cutString.size() - 1);
+        }
+	return temp;
 }
 
 void Command::splitString(std::string instruction){
@@ -52,13 +55,15 @@ void Command::splitString(std::string instruction){
         std::string currCommand;
         std::string basket = "";
 	CMD* temp;
-		if(instruction == ""){
-			CMDlist.push_back(new CMD(instruction, 0));
-			return;
-		}
+
+	if(instruction == ""){
+		CMDlist.push_back(new CMD(instruction, 0));
+		return;
+	}
+
         while((currCommand = splitter.next()) != "")
         {
-                connection = checkConnector(currCommand);
+		connection = checkConnector(currCommand);
                 if(connection == 0){
                         if(basket == ""){
                                 basket = currCommand;
@@ -77,16 +82,17 @@ void Command::splitString(std::string instruction){
                                 if(basket == ""){
 					basket = currCommand;
 				}
+				else if(currCommand == "]"){}
 				else{
 					basket += " " + currCommand;
 				}
 			}
-			
 			temp = new CMD(basket, connection);
 			CMDlist.push_back(temp);
 			basket = "";
 		}
 	}
+
 	temp = new CMD(basket, 0);
 	CMDlist.push_back(temp);
 	

@@ -100,7 +100,6 @@ void CMD::execute(string execCommand){
 			commandStatus = execute_stat(splitCommand, flag); //0 if not checked, 1 if failed, and 2 if done correctly
 		}
   		done = commandStatus;
-  		
   		return;
 }
 
@@ -135,8 +134,8 @@ int CMD::execute_stat(char splitCommand[], char flag){
 	//Note to self stat constructor arguments: stat(char a[], reference to struct)
 	
 	stat(splitCommand, &buf);
-	//for(int p = 0; p < 13; p++){
-	//	cout << splitCommand[p] << " ";
+	//for(int p = 0; p < 20; p++){
+	//	cout << splitCommand[p];
 	//}
 	//cout << endl;
 	if(flag == 'e')

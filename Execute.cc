@@ -48,7 +48,6 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 		}
 		if(CMDlist.at(vec_index) -> getConnector() == 4){
 			CMDlist.at(vec_index + 1) -> execute("stat");
-			return;
 		}
 		if(CMDlist.at(vec_index) -> getDone() == 0){ //
 			CMDlist.at(vec_index) -> execute("fork");
