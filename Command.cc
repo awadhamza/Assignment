@@ -20,21 +20,24 @@ Command::~Command()
 }
 
 int Command::checkConnector(std::string conString){
-	if((conString == "[" && conString.size() == 1) || (conString == "test" && conString.size() == 4)){
-		return 4;
+	if(conString == "[" && conString.size() == 1){
+		return 5;
 	}
-        if(conString.at(conString.size() - 1) == '&' && conString.at(conString.size() - 2) == '&'){
-                return 3;
-        }
-        else if(conString.at(conString.size() - 1) == '|' && conString.at(conString.size() - 2) == '|'){
-                return 2;
-        }
-        else if(conString.at(conString.size() - 1) == ';' || conString.at(conString.size() - 1) == ']'){
+	else if(conString == "test" && conString.size() == 4){
+		return  4;
+	}
+    else if(conString.at(conString.size() - 1) == '&' && conString.at(conString.size() - 2) == '&'){
+		return 3;
+	}
+    else if(conString.at(conString.size() - 1) == '|' && conString.at(conString.size() - 2) == '|'){
+        return 2;
+    }
+    else if(conString.at(conString.size() - 1) == ';'){
 		return 1;
-        }
-        else{
-                return 0;
-        }
+    }
+    else{
+        return 0;
+    }
 }
 
 std::string Command::cutConnector(std::string cutString){
@@ -72,8 +75,8 @@ void Command::splitString(std::string instruction){
                                 basket += " " + currCommand;
                         }
                 }
-		else if(connection == 4){
-			temp = new CMD("", 4);
+		else if(connection == 4 || connection == 5){
+			temp = new CMD("", connection);
 			CMDlist.push_back(temp);
 		}
                 else{
