@@ -19,44 +19,44 @@ Execute::~Execute()
 
 }
 
-void Execute::execute(std::vector<CMD*> CMDlist)
+void Execute::execute(std::vector<Base*> executeList)
 {
 	unsigned vec_index = 0;
 	int success = 0;
 
-	for(vec_index = 0; vec_index < CMDlist.size(); vec_index++)
+	for(vec_index = 0; vec_index < executeList.size(); vec_index++)
 	{
 		if(vec_index > 0)
 		{
-			
-			if((CMDlist.at(vec_index - 1)->getDone() == 1))	//Failure
+			cout << "con 2: " << executeList.at(vec_index) -> getConnector() << " " << vec_index << endl;
+			if((executeList.at(vec_index - 1)->getDone() == 1))	//Failure
 			{
-				if(CMDlist.at(vec_index - 1)->getConnector() == 3) // "&&"
+				if(executeList.at(vec_index - 1)->getConnector() == 3) // "&&"
 				{
-					CMDlist.at(vec_index)->setDone(1);	//make failure
+					executeList.at(vec_index)->setDone(1);	//make failure
 				}
 			}
 
-			else if ((CMDlist.at(vec_index - 1)->getDone() == 2)) // SUCCESS
+			else if ((executeList.at(vec_index - 1)->getDone() == 2)) // SUCCESS
 			{
-				
-				if(CMDlist.at(vec_index - 1)->getConnector() == 2) // "||"
+				if(executeList.at(vec_index - 1)->getConnector() == 2) // "||"
 				{
-					CMDlist.at(vec_index)->setDone(2);	//make success
+					executeList.at(vec_index)->setDone(2);	//make success
 				}				
 			}
 		}
-		if(CMDlist.at(vec_index) -> getConnector() == 4 || CMDlist.at(vec_index) -> getConnector() == 5){
-			CMDlist.at(vec_index + 1) -> execute("stat", CMDlist.at(vec_index) -> getConnector());
+		if(executeList.at(vec_index) -> getConnector() == 4 || executeList.at(vec_index) -> getConnector() == 5){	//If connector = '[' || connector = ']'
+			executeList.at(vec_index + 1) -> execute("stat", executeList.at(vec_index) -> getConnector());
 		}
-		else if(CMDlist.at(vec_index) -> getDone() == 0){ //
-			CMDlist.at(vec_index) -> execute("fork", CMDlist.at(vec_index) -> getConnector());
+		else if(executeList.at(vec_index) -> getDone() == 0){ //Unchecked done status
+			cout << "con 1: " << executeList.at(vec_index) -> getConnector() << " " << vec_index << endl;
+			executeList.at(vec_index) -> execute("fork", executeList.at(vec_index) -> getConnector());
 		}
 	}
 	
-	for(unsigned i = 0; i < CMDlist.size(); i++)
+	for(unsigned i = 0; i < executeList.size(); i++)
 	{
-		CMDlist.pop_back();
+		executeList.pop_back();
 	}
 	return;
 }

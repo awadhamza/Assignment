@@ -17,24 +17,6 @@ CMD::CMD() : instruction(""), connector(0), done(0) {}
 
 CMD::CMD(std::string instruction, int connector) : instruction(instruction), connector(connector), done(0) {}
 
-int CMD::getConnector(){
-	return connector;
-}
-
-void CMD::changeConnector(int newConnector){
-	connector = newConnector;
-	return;
-}
-
-int CMD::getDone(){
-	return done;
-}
-
-void CMD::setDone(int newDone){
-	done = newDone;
-	return;
-}
-
 void CMD::execute(string execCommand, int testOrBrac){
 	while(execCommand.at(0) == ' '){
 		execCommand = execCommand.substr(1, execCommand.size() - 1);
@@ -128,7 +110,7 @@ void CMD::execute(string execCommand, int testOrBrac){
 			}
 			commandStatus = execute_stat(splitCommand, flag); //0 if not checked, 1 if failed, and 2 if done correctly
 		}
-  		done = commandStatus;
+  		setDone(commandStatus);
   		return;
 }
 
@@ -211,6 +193,6 @@ int CMD::execute_stat(char splitCommand[], char flag){
 	//}
 }
 
-string CMD::getInstruction(){
-	return instruction;
+bool CMD::is_Group(){
+	return false;
 }

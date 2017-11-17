@@ -13,7 +13,7 @@ class Execute {
 		Execute();
 		~Execute();
 		void doThis(char[] , char*[]);
-		void execute(vector<CMD*> );		
+		void execute(vector<Base*> );		
 		
 };
 

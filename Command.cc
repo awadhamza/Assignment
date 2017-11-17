@@ -9,13 +9,16 @@
 #include <vector>
 #include <string>
 
+using std::endl;
+using std::cout;
+
 Command::~Command()
 {
-	for(unsigned i = CMDlist.size(); i > CMDlist.size(); --i)
+	for(unsigned i = commandList.size(); i > commandList.size(); --i)
 	{
-		delete CMDlist.at(i);
-		CMDlist.at(i) = 0;
-		CMDlist.pop_back();
+		delete commandList.at(i);
+		commandList.at(i) = 0;
+		commandList.pop_back();
 	}
 }
 
@@ -57,10 +60,10 @@ void Command::splitString(std::string instruction){
         int connection;
         std::string currCommand;
         std::string basket = "";
-	CMD* temp;
+	Base* temp;
 
 	if(instruction == ""){
-		CMDlist.push_back(new CMD(instruction, 0));
+		commandList.push_back(new CMD(instruction, 0));
 		return;
 	}
 
@@ -77,9 +80,9 @@ void Command::splitString(std::string instruction){
                 }
 		else if(connection == 4 || connection == 5){
 			temp = new CMD("", connection);
-			CMDlist.push_back(temp);
+			commandList.push_back(temp);
 		}
-                else{
+        else{
                         if(connection == 1){
                                 currCommand = cutConnector(currCommand);
                                 if(basket == ""){
@@ -91,22 +94,21 @@ void Command::splitString(std::string instruction){
 				}
 			}
 			temp = new CMD(basket, connection);
-			CMDlist.push_back(temp);
+			commandList.push_back(temp);
 			basket = "";
 		}
 	}
-
 	temp = new CMD(basket, 0);
-	CMDlist.push_back(temp);
+	commandList.push_back(temp);
 	
 	if(instruction.at(instruction.size() - 1) == ';'){
-		CMDlist.pop_back();
+		commandList.pop_back();
 	}
-	CMDlist.at(CMDlist.size() - 1) -> changeConnector(0);
+	commandList.at(commandList.size() - 1) -> changeConnector(0);
 }
 
-std::vector<CMD*> Command::getVector()
+std::vector<Base*> Command::getVector()
 {
-	return CMDlist;
+	return commandList;
 }
 
