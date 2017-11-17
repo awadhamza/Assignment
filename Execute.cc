@@ -46,11 +46,11 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 				}				
 			}
 		}
-		if(CMDlist.at(vec_index) -> getConnector() == 4){
-			CMDlist.at(vec_index + 1) -> execute("stat");
+		if(CMDlist.at(vec_index) -> getConnector() == 4 || CMDlist.at(vec_index) -> getConnector() == 5){
+			CMDlist.at(vec_index + 1) -> execute("stat", CMDlist.at(vec_index) -> getConnector());
 		}
-		if(CMDlist.at(vec_index) -> getDone() == 0){ //
-			CMDlist.at(vec_index) -> execute("fork");
+		else if(CMDlist.at(vec_index) -> getDone() == 0){ //
+			CMDlist.at(vec_index) -> execute("fork", CMDlist.at(vec_index) -> getConnector());
 		}
 	}
 	
@@ -58,4 +58,5 @@ void Execute::execute(std::vector<CMD*> CMDlist)
 	{
 		CMDlist.pop_back();
 	}
+	return;
 }
