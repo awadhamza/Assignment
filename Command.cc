@@ -21,6 +21,9 @@ Command::~Command()
 
 int Command::checkConnector(std::string conString){
 	if(conString.size() <= 1){
+		if(conString == "[" || conString == "test"){
+			return 4;
+		}
 		return 0;
 	}
         if(conString.at(conString.size() - 1) == '&' && conString.at(conString.size() - 2) == '&'){
@@ -64,6 +67,10 @@ void Command::splitString(std::string instruction){
                                 basket += " " + currCommand;
                         }
                 }
+		else if(connection == 4){
+			test = new CMD("", 4);
+			CMDlist.push_back(temp);
+		}
                 else{
                         if(connection == 1){
                                 currCommand = cutConnector(currCommand);
