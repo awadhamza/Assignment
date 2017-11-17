@@ -4,6 +4,7 @@
 #include "Interface.hh"
 #include "Tokenizer.h"
 #include "CMD.hh"
+#include "Group.hh"
 #include <vector>
 #include <iostream>
 
