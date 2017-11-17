@@ -10,8 +10,6 @@ class Interface {
    public:
       Interface();
       ~Interface();
-      void changeConVec(vector<int>);
-      void changeCommandVec(vector<vector<char*> >);
       void orchestrate();
 };
 

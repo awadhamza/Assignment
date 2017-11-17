@@ -8,9 +8,6 @@
 
 class CMD : public Base {
 	private:
-		std::string instruction;
-		int connector;
-		int done;
 	public:
 		CMD();
 		CMD(std::string, int);

@@ -12,10 +12,18 @@
 
 using namespace std;
 
-CMD::CMD() : instruction(""), connector(0), done(0) {}
+CMD::CMD() : Base(){
+	instruction = "";
+	connector = 0;
+	done = 0;
+}
 
 
-CMD::CMD(std::string instruction, int connector) : instruction(instruction), connector(connector), done(0) {}
+CMD::CMD(std::string newInstruction, int newConnector) : Base(){
+	instruction = newInstruction;
+	connector = newConnector;
+	done = 0;
+}
 
 void CMD::execute(string execCommand, int testOrBrac){
 	while(execCommand.at(0) == ' '){

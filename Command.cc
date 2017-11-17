@@ -60,7 +60,7 @@ void Command::splitString(std::string instruction){
         int connection;
         std::string currCommand;
         std::string basket = "";
-	Base* temp;
+		Base* temp;
 
 	if(instruction == ""){
 		commandList.push_back(new CMD(instruction, 0));
@@ -69,29 +69,29 @@ void Command::splitString(std::string instruction){
 
         while((currCommand = splitter.next()) != "")
         {
-		connection = checkConnector(currCommand);
-                if(connection == 0){
-                        if(basket == ""){
-                                basket = currCommand;
-                        }
-                        else{
-                                basket += " " + currCommand;
-                        }
-                }
+			connection = checkConnector(currCommand);
+			if(connection == 0){
+				if(basket == ""){
+					basket = currCommand;
+				}
+				else{
+					basket += " " + currCommand;
+				}
+			}
 		else if(connection == 4 || connection == 5){
 			temp = new CMD("", connection);
 			commandList.push_back(temp);
 		}
         else{
-                        if(connection == 1){
-                                currCommand = cutConnector(currCommand);
-                                if(basket == ""){
-					basket = currCommand;
-				}
-				else if(currCommand == "]"){}
-				else{
-					basket += " " + currCommand;
-				}
+			if(connection == 1){
+					currCommand = cutConnector(currCommand);
+					if(basket == ""){
+						basket = currCommand;
+					}
+					else if(currCommand == "]"){}
+					else{
+						basket += " " + currCommand;
+					}
 			}
 			temp = new CMD(basket, connection);
 			commandList.push_back(temp);

@@ -28,7 +28,6 @@ void Execute::execute(std::vector<Base*> executeList)
 	{
 		if(vec_index > 0)
 		{
-			cout << "con 2: " << executeList.at(vec_index) -> getConnector() << " " << vec_index << endl;
 			if((executeList.at(vec_index - 1)->getDone() == 1))	//Failure
 			{
 				if(executeList.at(vec_index - 1)->getConnector() == 3) // "&&"
@@ -49,7 +48,6 @@ void Execute::execute(std::vector<Base*> executeList)
 			executeList.at(vec_index + 1) -> execute("stat", executeList.at(vec_index) -> getConnector());
 		}
 		else if(executeList.at(vec_index) -> getDone() == 0){ //Unchecked done status
-			cout << "con 1: " << executeList.at(vec_index) -> getConnector() << " " << vec_index << endl;
 			executeList.at(vec_index) -> execute("fork", executeList.at(vec_index) -> getConnector());
 		}
 	}
