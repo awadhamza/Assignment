@@ -45,6 +45,14 @@ void CMD::execute(){
 		string completeCommand = instruction;
 		char splitCommand[1024];
   		char *executables[1024];
+		
+		int count = 0;
+		while(count != 1024){
+			executables[count] = NULL;
+			count++;
+		}
+		memset(splitCommand, 0, 1023);
+
   		int charSize = completeCommand.size();
   		char* addLetter = NULL;
  		int i = 0;
@@ -65,30 +73,9 @@ void CMD::execute(){
    			executablesIndex++;
   		}
   		
-  		
-		//for (unsigned int k = 0; k < completeCommand.size() + 1; k++){
-    	//		cout << splitCommand[k] << endl;
-  		//}
-  		
-  		cout << "SPLITCOMMAND: ";
-  		for(unsigned i = 0; i < charSize + 1; i++)
-  		{
-			cout << splitCommand[i] << " ";
-		} cout << endl;
-		
-  		cout << "EXECUTABLES: " << executables[0] << " " << endl;
-  		
   		int commandStatus = execute_fork(splitCommand, executables); //0 if not checked, 1 if failed, and 2 if done correctly
   		done = commandStatus;
   		
-  		/*
-  		int ii = 1023;
-  		while(ii)
-  		{
-			delete executables[ii];
-			delete splitCommand[ii];
-		}
-  		*/
   		return;
 }
 

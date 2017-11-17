@@ -20,10 +20,13 @@ Command::~Command()
 }
 
 int Command::checkConnector(std::string conString){
-        if(conString.at(conString.size() - 1) == '&'){
+	if(conString.size() == 1){
+		return 0;
+	}
+        if(conString.at(conString.size() - 1) == '&' && conString.at(conString.size() - 2) == '&'){
                 return 3;
         }
-        else if(conString.at(conString.size() - 1) == '|'){
+        else if(conString.at(conString.size() - 1) == '|' && conString.at(conString.size() - 2) == '|'){
                 return 2;
         }
         else if(conString.at(conString.size() - 1) == ';'){
@@ -65,11 +68,11 @@ void Command::splitString(std::string instruction){
                         if(connection == 1){
                                 currCommand = cutConnector(currCommand);
                                 if(basket == ""){
-										basket = currCommand;
-								}
-								else{
-									basket += " " + currCommand;
-								}
+					basket = currCommand;
+				}
+				else{
+					basket += " " + currCommand;
+				}
 			}
 			
 			temp = new CMD(basket, connection);
