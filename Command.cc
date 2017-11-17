@@ -68,7 +68,7 @@ void Command::splitString(std::string instruction){
                         }
                 }
 		else if(connection == 4){
-			test = new CMD("", 4);
+			temp = new CMD("", 4);
 			CMDlist.push_back(temp);
 		}
                 else{
