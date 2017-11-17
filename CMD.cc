@@ -73,10 +73,10 @@ void CMD::execute(){
   		cout << "SPLITCOMMAND: ";
   		for(unsigned i = 0; i < charSize + 1; i++)
   		{
-			cout << splitCommand[i];
+			cout << splitCommand[i] << " ";
 		} cout << endl;
 		
-  		cout << "EXECUTABLES: " << executables[0] << endl;
+  		cout << "EXECUTABLES: " << executables[0] << " " << endl;
   		
   		int commandStatus = execute_fork(splitCommand, executables); //0 if not checked, 1 if failed, and 2 if done correctly
   		done = commandStatus;
