@@ -55,6 +55,9 @@ std::string Command::cutConnector(std::string cutString){
 }
 
 void Command::splitString(std::string instruction){
+	if(instruction.at(0) == '#'){
+		return;
+	}
 	std::string firstPart;
 	std::string secondPart;
 	for(unsigned int i = 0; i < instruction.size() - 1; i++){
@@ -152,7 +155,12 @@ void Command::splitString(std::string instruction){
 				currCommand = splitter.next();
 				}
 			}
-		
+			if(currCommand.at(0) == '#'){
+				temp = new CMD(basket, 0);
+                        	commandList.push_back(temp);
+                		return;
+        		}
+	
 			if(stringDone && currCommand == ""){
 				return;
 			}
