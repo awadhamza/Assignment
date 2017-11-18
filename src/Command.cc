@@ -97,7 +97,7 @@ void Command::splitString(std::string instruction){
 						parenCount++;
 					}
 				}
-				cout << "BASKET 0: " << basket << endl;
+				
 				if(basket.at(0) == '('){
 					basket = basket.substr(1, basket.size() - 2);
 				}
@@ -113,7 +113,7 @@ void Command::splitString(std::string instruction){
 
 				temp = new Group(basket, connection);
 				commandList.push_back(temp);
-				cout << "BASKET 1: " << basket << endl;
+				
 				basket = "";
 				
 				if(currCommand != ""){
@@ -157,13 +157,13 @@ void Command::splitString(std::string instruction){
 			}
 			temp = new CMD(basket, connection);
 			commandList.push_back(temp);
-			cout << "BASKET 2: " << basket << endl;
+			
 			basket = "";
 		}
 	}
 	
 	temp = new CMD(basket, 0);
-	cout << "BASKET 3: " << basket << endl;
+	
 	commandList.push_back(temp);
 	basket = "";
 	
