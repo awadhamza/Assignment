@@ -1,5 +1,5 @@
 output: Base.o CMD.o Command.o Execute.o Group.o Interface.o Menu.o test.o Tokenizer.o
-	g++ Base.o CMD.o Command.o Execute.o Group.o Interface.o Menu.o test.o Tokenizer.o -o output
+	g++ Base.o CMD.o Command.o Execute.o Group.o Interface.o Menu.o test.o Tokenizer.o -o rshell
 	
 	
 test.o: src/test.cpp

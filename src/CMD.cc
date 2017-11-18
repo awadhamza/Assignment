@@ -136,6 +136,7 @@ int CMD::execute_fork(char splitCommand[], char* executables[]){
 		{
 			if(done == 0){
 				execvp(splitCommand, executables);
+				perror("exec");
 				done = 1;
 			}
 			return done;
