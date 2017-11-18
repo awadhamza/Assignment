@@ -1,3 +1,6 @@
+DISCLAIMER:
+We can't get a makefile to work as of now. Please move into src directory and compile all .cc and .cpp files with '-std=c++11' and any other flag. Then run the a.out file to test our current shell! Sorry for the inconvenience!
+
 # rshell-h-h
 rshell-h-h created by GitHub Classroom
 
