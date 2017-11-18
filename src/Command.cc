@@ -55,6 +55,26 @@ std::string Command::cutConnector(std::string cutString){
 }
 
 void Command::splitString(std::string instruction){
+	std::string firstPart;
+	std::string secondPart;
+	for(unsigned int i = 0; i < instruction.size() - 1; i++){
+		if(instruction.at(i) == '&' && instruction.at(i + 1) == '&'){
+			firstPart = instruction.substr(0, i);
+			secondPart = instruction.substr((i + 2), instruction.size());
+			firstPart += " && ";
+			firstPart += secondPart;
+			instruction = firstPart;
+			i += 2;
+		}
+		if(instruction.at(i) == '|' && instruction.at(i + 1) == '|'){
+			firstPart = instruction.substr(0, i);
+                        secondPart = instruction.substr((i + 2), instruction.size());
+                        firstPart += " || ";
+                        firstPart += secondPart;
+			instruction = firstPart;
+			i += 2;
+		}
+	}
         Tokenizer splitter(instruction);
 
         int connection;
