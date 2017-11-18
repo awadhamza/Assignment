@@ -1,5 +1,5 @@
 # DISCLAIMER:
-We can't get a makefile to rid of all .o obj files automatically. As a result, to use rshell, please enter in 'make' from the root folder. Then enter './rshell' . If you'd like to rid of the object files, enter in 'make clean'. We apologize for the inconvenience.
+We can't get a makefile to rid of all .o obj files automatically, netiher can we get the output to a target file. As a result, to use rshell, please enter in 'make' from the root folder. Then enter './rshell' . If you'd like to rid of the object files, enter in 'make clean'. We apologize for the inconvenience.
 
 # rshell-h-h
 rshell-h-h created by GitHub Classroom
