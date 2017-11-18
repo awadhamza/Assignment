@@ -1,3 +1,6 @@
+DISCLAIMER:
+We can't get a makefile to work as of now. Please move into src directory and compile all .cc and .cpp files with '-std=c++11' and any other flag. Then run the a.out file to test our current shell! Sorry for the inconvenience!
+
 # rshell-h-h
 rshell-h-h created by GitHub Classroom
 
@@ -12,9 +15,27 @@ The chosen design style for accomplishing this is composite. This is because it 
 
 The current state of execution for our rshell seems to retrieve the correct commands in terms of char*s, even when filled with a mix of connectors; however, when execvp() is called onto a built in command "ls," it appears to not execute and return an error stating that there is no such file or directory called "ls."
 
-# Classes/Class Groups:
-	First and foremost, our overarching class group is called Interface. This abstract base class will inherit certain data members and methods to its two children: Menu and Command class. This Interface will be, not only responsible for sharing data members across classes, but to orchestrate its children in a way that the rshell prompt can function in sync with regards to displaying, reading in, and splitting commands. This interface class will eventually loop to a point where its subclass, Menu, will receive the “exit” command; thus, our interface operations will terminate and all functionality of our software will cease.
-	The first subclass of Interface to discuss is Menu. Menu will have a string data member returnCMD and a function which requests command input from the client getPrompt(). getPrompt() will have no return value and if the command(s) can be identified and isn’t the exit command, the function will set returnCMD to the inputted command line. Essentially, getPrompt() is a function that prints ‘$’ and waits for the user to type in the desired command(s). Menu is a subclass of Interface.
+# Features
+   Commands can be typed in the rshell as such:
+	
+
+	echo Hello World
+	echo "Hello World";
+	git status && echo a
+	echo a || echo b
+	ech a || echo b
+	[ -r src/CMD.cc ]
+	[ -e src/Execute.hh ]
+	[ -d src/ ]
+	(echo a && echo z) || echo b
+	(ech a && echo b) && echo c
+	(ech a || echo b) && echo c
+	([ -e src/Menu.hh ] || echo a) || echo b; echo c
+
+
+# Classes/Class Groups
+   First and foremost, our overarching class group is called Interface. This abstract base class will inherit certain data members and methods to its two children: Menu and Command class. This Interface will be, not only responsible for sharing data members across classes, but to orchestrate its children in a way that the rshell prompt can function in sync with regards to displaying, reading in, and splitting commands. This interface class will eventually loop to a point where its subclass, Menu, will receive the “exit” command; thus, our interface operations will terminate and all functionality of our software will cease.
+    The first subclass of Interface to discuss is Menu. Menu will have a string data member returnCMD and a function which requests command input from the client getPrompt(). getPrompt() will have no return value and if the command(s) can be identified and isn’t the exit command, the function will set returnCMD to the inputted command line. Essentially, getPrompt() is a function that prints ‘$’ and waits for the user to type in the desired command(s). Menu is a subclass of Interface.
 	The second subclass of Interface is Command. This class is responsible for organizing its own subclasses to split commands received through Menu and store them in Command’s vector data member: vector<CMD> CMDList. While Command does inherit from Interface, it will have two children of its own: CMD and Execute. 
 CMD’s purpose is defined through one of CMD’s functions: splitString(). On a larger scale, CMD objects will hold information regarding the single split command and its command type (if numerous). These CMD objects will be the vector type of which CMDList is made of. Therefore, CMD has to contain two data members, aside from its splitString() method: a string instruction data member and an int connector data member. instruction is fairly straightforward in that it will be set through splitString(), along with connector being set, and then dynamically allocated and pushed onto Command’s CMDList. instruction is simply going to store a single command, while connector is going to figure out what connector-type follows this command. If the connector type is || , then the identifier we will use in connector is 2. If && , we will use 3. If the connector-type is just a semicolon, then connector will be 1. If the connector-type doesn’t exist (i.e. there is nothing following the current command) then connector will be set to 0.
 The second subclass of Command, Execute, inherits its parent’s vector of CMDs. Execute will be responsible for going through the entire CMDList, tossing out any commands that don’t exist or that our command prompt doesn’t know about yet. And for each valid command(s) that it goes through, they will be executed then be popped out of the vector, so by the end of Execute going through all CMDs in CMDList, the resultant vector should be empty of all stored CMDs.
