@@ -72,20 +72,19 @@ void Command::splitString(std::string instruction){
         while((currCommand = splitter.next()) != "")
         {
 			stringDone = false;
-			int parenCount = 0;
+			int openParenCount = 0;
+			int closedParenCount = 0;
+
 			if(currCommand.at(0) == '('){
 				while(!stringDone){
 					if(currCommand == ""){
+						if(!stringDone){
+							cout << "Missing ')'" << endl;
+							exit(0);
+						}
 						break;
 					}
-					if(currCommand.at(currCommand.size() - 1) == ')'){
-						if(parenCount == 0){
-							stringDone = true;
-						}
-						else{
-							parenCount--;
-						}
-					}
+						
 					if(basket == ""){
 						basket = currCommand;
 					}
@@ -93,9 +92,22 @@ void Command::splitString(std::string instruction){
 						basket += " " + currCommand;
 					}
 					currCommand = splitter.next();
-					if(currCommand != "" && currCommand.at(0) == '('){
-						parenCount++;
+					
+					openParenCount = 0;
+					for(unsigned int k = 0; k < basket.size(); k++){
+						if(basket.at(k) == '('){
+                                                        openParenCount++;
+                                                }
 					}
+					 closedParenCount = 0;
+                                        for(unsigned int k = 0; k < basket.size(); k++){
+                                                if(basket.at(k) == ')'){
+                                                        closedParenCount++;
+                                                }
+                                        }
+                                        if(closedParenCount == openParenCount){
+                                                stringDone = true;
+                                        }
 				}
 				
 				if(basket.at(0) == '('){
