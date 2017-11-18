@@ -66,16 +66,18 @@ void Command::splitString(std::string instruction){
 		commandList.push_back(new CMD(instruction, 0));
 		return;
 	}
+	
+		bool stringDone = false;
 
         while((currCommand = splitter.next()) != "")
         {
-			bool stringDone = false;
+			stringDone = false;
 			int parenCount = 0;
 			if(currCommand.at(0) == '('){
 				while(!stringDone){
 					if(currCommand == ""){
-                                                exit(0);
-                                        }
+							exit(0);
+					}
 					if(currCommand.at(currCommand.size() - 1) == ')'){
 						if(parenCount == 0){
 							stringDone = true;
@@ -92,13 +94,13 @@ void Command::splitString(std::string instruction){
 					}
 					currCommand = splitter.next();
 					if(currCommand != "" && currCommand.at(0) == '('){
-                                                parenCount++;
-                                        }
+						parenCount++;
+					}
 				}
 				if(basket.at(0) == '('){
-                    	                basket = basket.substr(1, basket.size() - 2);
-                                }
-				if(basket.at(basket.size() - 2) == ')'){
+					basket = basket.substr(1, basket.size() - 2);
+				}
+				if(basket.at(basket.size() - 1) == ')'){
 					basket = basket.substr(0, basket.size() - 2);
 				}
 				if(currCommand != ""){
@@ -109,10 +111,18 @@ void Command::splitString(std::string instruction){
 				}
 				temp = new Group(basket, connection);
 				commandList.push_back(temp);
+				
+				basket = "";
+				
+				if(currCommand != ""){
+				currCommand = splitter.next();
+				}
 			}
-						
-
-
+		
+			if(stringDone && currCommand == ""){
+				return;
+			}
+		
 			if(currCommand == ""){
 				connection = 0;
 			}
@@ -148,8 +158,10 @@ void Command::splitString(std::string instruction){
 			basket = "";
 		}
 	}
+	
 	temp = new CMD(basket, 0);
 	commandList.push_back(temp);
+	basket = "";
 	
 	if(instruction.at(instruction.size() - 1) == ';'){
 		commandList.pop_back();

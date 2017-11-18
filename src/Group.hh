@@ -13,6 +13,7 @@ using std::vector;
 class Group : public Base {
 	public:
 		Group() : Base() {}
+		~Group();
 		Group(string, int);
 		void makeGroup(string);
 		void execute(string, int);

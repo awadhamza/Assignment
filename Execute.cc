@@ -23,7 +23,11 @@ void Execute::execute(std::vector<Base*> executeList)
 {
 	unsigned vec_index = 0;
 	int success = 0;
-
+	for(vec_index = 0; vec_index < executeList.size(); vec_index++){
+		if(executeList.at(vec_index) -> is_Group() && executeList.at(vec_index) -> getDone() == 0){
+			executeList.at(vec_index) -> execute("", 0);
+		}
+	}
 	for(vec_index = 0; vec_index < executeList.size(); vec_index++)
 	{
 		if(vec_index > 0)
