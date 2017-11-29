@@ -166,9 +166,8 @@ void Command::splitString(std::string instruction){
 			if(currCommand.size() > 0 && currCommand.at(0) == '\"'){
 				do{
 					if(currCommand == ""){
-						temp = new CMD(basket, 0);
-						commandList.push_back(temp);
-						basket = "";
+						cout << "Missing '\"'" << endl;
+                                                exit(0);
 						return;
 					}
 				
