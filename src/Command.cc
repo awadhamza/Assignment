@@ -60,8 +60,9 @@ void Command::splitString(std::string instruction){
 	}
 	std::string firstPart;
 	std::string secondPart;
+	bool notInQuotes = true;
 	for(unsigned int i = 0; i < instruction.size() - 1; i++){
-		if(instruction.at(i) == '&' && instruction.at(i + 1) == '&'){
+		if(instruction.at(i) == '&' && instruction.at(i + 1) == '&' && notInQuotes){
 			firstPart = instruction.substr(0, i);
 			secondPart = instruction.substr((i + 2), instruction.size());
 			firstPart += " && ";
@@ -69,7 +70,7 @@ void Command::splitString(std::string instruction){
 			instruction = firstPart;
 			i += 2;
 		}
-		if(instruction.at(i) == '|' && instruction.at(i + 1) == '|'){
+		if(instruction.at(i) == '|' && instruction.at(i + 1) == '|' && notInQuotes){
 			firstPart = instruction.substr(0, i);
                         secondPart = instruction.substr((i + 2), instruction.size());
                         firstPart += " || ";
@@ -77,7 +78,14 @@ void Command::splitString(std::string instruction){
 			instruction = firstPart;
 			i += 2;
 		}
+		if(instruction.at(i) == '\"'){
+			if(notInQuotes)
+				notInQuotes = false;
+			else
+				notInQuotes = true;
+		}
 	}
+	notInQuotes = true;
         Tokenizer splitter(instruction);
 
         int connection;
@@ -155,7 +163,40 @@ void Command::splitString(std::string instruction){
 				currCommand = splitter.next();
 				}
 			}
-			if(currCommand.at(0) == '#'){
+			if(currCommand.size() > 0 && currCommand.at(0) == '\"'){
+				do{
+					if(currCommand == ""){
+						temp = new CMD(basket, 0);
+						commandList.push_back(temp);
+						basket = "";
+						return;
+					}
+				
+					basket += " " + currCommand;
+					currCommand = splitter.next();
+				
+				} while(basket.at(basket.size() - 1) != '\"');
+
+				if(currCommand == ""){
+					connection = 0;
+				} 
+				else{
+					connection = checkConnector(currCommand);
+				}
+				temp = new CMD(basket, connection);
+				commandList.push_back(temp);
+
+				basket = "";
+
+				if(currCommand != ""){
+					currCommand = splitter.next();
+				}
+				else{
+					return;
+				}
+			}
+			
+			if(currCommand.size() > 0 && currCommand.at(0) == '#'){
 				temp = new CMD(basket, 0);
                         	commandList.push_back(temp);
                 		return;
