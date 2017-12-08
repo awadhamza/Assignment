@@ -1,11 +1,6 @@
 #include "Command.hh"
-
-#include "Interface.hh"
-
 #include "Tokenizer.h"
 #include "Interface.hh"
-
-#include "Tokenizer.h"
 #include <vector>
 #include <string>
 
@@ -54,10 +49,7 @@ std::string Command::cutConnector(std::string cutString){
 	return temp;
 }
 
-void Command::splitString(std::string instruction){
-	if(instruction.at(0) == '#'){
-		return;
-	}
+void Command::fixTouchingConnectors(string& instruction){
 	std::string firstPart;
 	std::string secondPart;
 	bool notInQuotes = true;
@@ -79,34 +71,15 @@ void Command::splitString(std::string instruction){
 			i += 2;
 		}
 		if(instruction.at(i) == '\"'){
-			if(notInQuotes)
-				notInQuotes = false;
-			else
-				notInQuotes = true;
+			notInQuotes = !notInQuotes;
 		}
 	}
-	notInQuotes = true;
-        Tokenizer splitter(instruction);
+}
 
-        int connection;
-        std::string currCommand;
-        std::string basket = "";
-		Base* temp;
-
-	if(instruction == ""){
-		commandList.push_back(new CMD(instruction, 0));
-		return;
-	}
-	
-		bool stringDone = false;
-
-        while((currCommand = splitter.next()) != "")
-        {
-			stringDone = false;
-			int openParenCount = 0;
-			int closedParenCount = 0;
-
-			if(currCommand.at(0) == '('){
+bool Command::fixParen(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp){
+	bool stringDone = false;
+				int openParenCount = 0;
+				int closedParenCount = 0;
 				while(!stringDone){
 					if(currCommand == ""){
 						if(!stringDone){
@@ -159,22 +132,31 @@ void Command::splitString(std::string instruction){
 				
 				basket = "";
 				
-				if(currCommand != ""){
-				currCommand = splitter.next();
+				if(currCommand == "" && stringDone){
+					return true;
 				}
-			}
-			if(currCommand.size() > 0 && currCommand.at(0) == '\"'){
+				return false;
+}
+
+bool Command::fixQuote(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp){
+				bool inQuotes = true;
 				do{
 					if(currCommand == ""){
 						cout << "Missing '\"'" << endl;
-                                                exit(0);
-						return;
+                        exit(0);
+						return true;
 					}
 				
+					for(int e = 1; e < currCommand.size(); e++){
+						if(currCommand.at(e) == '\"'){
+							inQuotes = false;
+						}
+					}
+					
 					basket += " " + currCommand;
 					currCommand = splitter.next();
 				
-				} while(basket.at(basket.size() - 1) != '\"');
+				} while(inQuotes);
 
 				if(currCommand == ""){
 					connection = 0;
@@ -186,32 +168,55 @@ void Command::splitString(std::string instruction){
 				commandList.push_back(temp);
 
 				basket = "";
-
-				if(currCommand != ""){
-					currCommand = splitter.next();
+				if(currCommand == ""){
+					return true;
 				}
-				else{
+				return false;
+}
+
+void Command::splitString(std::string instruction){
+	if(instruction.at(0) == '#'){
+		return;
+	}
+        
+        Tokenizer splitter(instruction);
+
+        int connection;
+        std::string currCommand;
+        std::string basket = "";
+		Base* temp;
+
+	if(instruction == ""){
+		commandList.push_back(new CMD(instruction, 0));
+		return;
+	}
+
+        while((currCommand = splitter.next()) != "")
+        {
+			if(currCommand.at(0) == '('){
+				if(fixParen(splitter, currCommand, basket, connection, temp)){
+					return;
+				}
+			}
+			else if(currCommand.size() > 0 && currCommand.at(0) == '\"'){
+				if(fixQuote(splitter, currCommand, basket, connection, temp)){
 					return;
 				}
 			}
 			
-			if(currCommand.size() > 0 && currCommand.at(0) == '#'){
+			else if(currCommand.size() > 0 && currCommand.at(0) == '#'){
 				temp = new CMD(basket, 0);
-                        	commandList.push_back(temp);
-                		return;
-        		}
-	
-			if(stringDone && currCommand == ""){
-				return;
-			}
-		
-			if(currCommand == ""){
-				connection = 0;
-			}
+                commandList.push_back(temp);
+                return;
+        	}
 			else{
-				connection = checkConnector(currCommand);
-			}
-			
+				if(currCommand == ""){
+					connection = 0;
+				}
+				else{
+					connection = checkConnector(currCommand);
+				}
+				
 			if(connection == 0){
 				if(basket == ""){
 					basket = currCommand;
@@ -220,25 +225,26 @@ void Command::splitString(std::string instruction){
 					basket += " " + currCommand;
 				}
 			}
-		else if(connection == 4 || connection == 5){
-			temp = new CMD("", connection);
-			commandList.push_back(temp);
-		}
-        else{
-			if(connection == 1){
-					currCommand = cutConnector(currCommand);
-					if(basket == ""){
-						basket = currCommand;
-					}
-					else if(currCommand == "]"){}
-					else{
-						basket += " " + currCommand;
-					}
+			else if(connection == 4 || connection == 5){
+				temp = new CMD("", connection);
+				commandList.push_back(temp);
 			}
-			temp = new CMD(basket, connection);
-			commandList.push_back(temp);
-			
-			basket = "";
+			else{
+				if(connection == 1){
+						currCommand = cutConnector(currCommand);
+						if(basket == ""){
+							basket = currCommand;
+						}
+						else if(currCommand == "]"){}
+						else{
+							basket += " " + currCommand;
+						}
+				}
+				temp = new CMD(basket, connection);
+				commandList.push_back(temp);
+				
+				basket = "";
+			}
 		}
 	}
 	

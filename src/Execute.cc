@@ -23,11 +23,7 @@ void Execute::execute(std::vector<Base*> executeList)
 {
 	unsigned vec_index = 0;
 	int success = 0;
-	for(vec_index = 0; vec_index < executeList.size(); vec_index++){
-		if(executeList.at(vec_index) -> is_Group() && executeList.at(vec_index) -> getDone() == 0){
-			executeList.at(vec_index) -> execute("", 0);
-		}
-	}
+	
 	for(vec_index = 0; vec_index < executeList.size(); vec_index++)
 	{
 		if(vec_index > 0)
@@ -51,8 +47,11 @@ void Execute::execute(std::vector<Base*> executeList)
 		if(executeList.at(vec_index) -> getConnector() == 4 || executeList.at(vec_index) -> getConnector() == 5){	//If connector = '[' || connector = ']'
 			executeList.at(vec_index + 1) -> execute("stat", executeList.at(vec_index) -> getConnector());
 		}
-		else if(executeList.at(vec_index) -> getDone() == 0){ //Unchecked done status
+		else if(executeList.at(vec_index) -> getDone() == 0 && !executeList.at(vec_index) -> is_Group()){ //Unchecked done status
 			executeList.at(vec_index) -> execute("fork", executeList.at(vec_index) -> getConnector());
+		}
+		else if(executeList.at(vec_index) -> is_Group() && executeList.at(vec_index) -> getDone() == 0){
+			executeList.at(vec_index) -> execute("", executeList.at(vec_index) -> getConnector());
 		}
 	}
 	

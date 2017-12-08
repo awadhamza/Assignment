@@ -21,7 +21,9 @@ class Command{
 		std::string cutConnector(std::string);  //helper function
 		void splitString(std::string);		//Parser, and fills vector with full and separated commands
 		vector<Base*> getVector();	//accessor
-
+		void fixTouchingConnectors(string& instruction);
+		bool fixParen(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp);
+		bool fixQuote(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp);
 };
 
 #endif
