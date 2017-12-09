@@ -70,6 +70,38 @@ void Command::fixTouchingConnectors(string& instruction){
 			instruction = firstPart;
 			i += 2;
 		}
+		else if(instruction.at(i) == '|' && notInQuotes){
+			firstPart = instruction.substr(0, i);
+                        secondPart = instruction.substr((i + 1), instruction.size());
+                        firstPart += " | ";
+                        firstPart += secondPart;
+			instruction = firstPart;
+			i += 2;
+		}
+		if(instruction.at(i) == '<' && notInQuotes){
+			firstPart = instruction.substr(0, i);
+                        secondPart = instruction.substr((i + 1), instruction.size());
+                        firstPart += " < ";
+                        firstPart += secondPart;
+			instruction = firstPart;
+			i += 2;
+		}
+		if(instruction.at(i) == '>' && instruction.at(i + 1) == '>' && notInQuotes){
+			firstPart = instruction.substr(0, i);
+                        secondPart = instruction.substr((i + 2), instruction.size());
+                        firstPart += " >> ";
+                        firstPart += secondPart;
+			instruction = firstPart;
+			i += 2;
+		}
+		else if(instruction.at(i) == '>' && notInQuotes){
+			firstPart = instruction.substr(0, i);
+                        secondPart = instruction.substr((i + 1), instruction.size());
+                        firstPart += " > ";
+                        firstPart += secondPart;
+			instruction = firstPart;
+			i += 2;
+		}
 		if(instruction.at(i) == '\"'){
 			notInQuotes = !notInQuotes;
 		}
