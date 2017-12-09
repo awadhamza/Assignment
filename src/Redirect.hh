@@ -22,8 +22,6 @@ class Redirect : public Base {
 		Redirect() : Base(), fullPath(""), typePath(""), separatedPath(0) {}
 		Redirect(string path, int connector) : Base(), fullPath(path), connector(type), separatedPath(0) {}
 		~Redirect();
-		string findNextDirection(string );
-		string findNextString(string );
 		void readyVector();
 		void execute();
 		void execute(string , int );
@@ -32,7 +30,6 @@ class Redirect : public Base {
 		void executeG(string , string );
 		void executeL(string , string );
 		bool is_Group();
-		void setType(string );
 		void setString(string );
 		string getString();
 		string getConnector();
