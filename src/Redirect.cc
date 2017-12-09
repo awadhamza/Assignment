@@ -42,6 +42,9 @@ string Redirect::findNextString(string command)
 		}
 		else
 		{
+			if(command.at(command.size() - 1) == ' '){
+				substr(0, command.size() - 1);
+			}
 			return str;
 		}
 	}
@@ -52,7 +55,7 @@ void Redirect::readyVector()
 	string commandCopy = getString();
 	string strFunc;
 	string dirFunc;
-	while(commandCopy.size())
+	while(commandCopy.size() > 0)
 	{
 		//Get next string and direction char
 		strFunc = findNextString(commandCopy);
