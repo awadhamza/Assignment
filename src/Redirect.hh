@@ -14,23 +14,29 @@ using std::vector;
 class Redirect : public Base {
 	private:
 		string fullPath;
-		string typePath;
+		int connector;
 		vector<string> separatedPath;
 	
 	public:
 		
 		Redirect() : Base(), fullPath(""), typePath(""), separatedPath(0) {}
-		Redirect(string path, string type) : Base(), fullPath(path), typePath(type), separatedPath(0) {}
+		Redirect(string path, int connector) : Base(), fullPath(path), connector(type), separatedPath(0) {}
 		~Redirect();
 		string findNextDirection(string );
 		string findNextString(string );
 		void readyVector();
+		void execute();
 		void execute(string , int );
+		void executePipe(string , string );
+		void executeGG(string , string );
+		void executeG(string , string );
+		void executeL(string , string );
 		bool is_Group();
 		void setType(string );
 		void setString(string );
 		string getString();
-		string getType();
+		string getConnector();
+		vector<string> getVector();
 		
 };
 

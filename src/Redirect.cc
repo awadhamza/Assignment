@@ -66,11 +66,58 @@ void Redirect::readyVector()
 	}
 }
 
+void Redirect::execute()
+{
+	execute(getString(), getConnector());
+}
+
 void Redirect::execute(string fullCommand, int connector)
 {
 	readyVector();
+	vector<string> vectorCopy = getVector();
 	
+	while(true){
+		
+		if(vectorCopy.size() >= 3)
+		{
+			string leftString = vectorCopy.at(vectorCopy.size() - 3);
+			string leftConnector = vectorCopy.at(vectorCopy.size() - 2);
+			string rightString = vectorCopy.at(vectorCopy.size() - 1);
+		} else {
+			break;
+		}
+		if(leftConnector == '|')
+		{
+			executePipe(leftString, rightString);
+		} else if (leftConnector == '>')
+		{
+			executeG(leftString, rightString);
+		} else if (leftConnector == ">>")
+		{
+			executeGG(leftString, rightString);
+		} else if (leftConnector == '<')
+		{
+			executeL(leftString, rightString);
+		}
+		
+	}
 	
+}
+
+void executePipe(string , string )
+{
+	
+}
+void executeGG(string , string )
+{
+	
+}
+void executeG(string , string )
+{
+	
+}
+void executeL(string , string )
+{
 	
 }
 
@@ -94,7 +141,12 @@ string Redirect::getString()
 	return fullPath;
 }
 
-string Redirect::getType()
+string Redirect::getConnector()
 {
-	return typePath;
+	return connector;
+}
+
+vector<string> Redirect::getVector()
+{
+	return separatedPath;
 }
