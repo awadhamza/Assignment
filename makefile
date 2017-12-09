@@ -1,5 +1,5 @@
-output: Base.o CMD.o Command.o Execute.o Group.o Interface.o Menu.o test.o Tokenizer.o
-	g++ Base.o CMD.o Command.o Execute.o Group.o Interface.o Menu.o test.o Tokenizer.o -o rshell
+output: Base.o CMD.o Command.o Execute.o Group.o Interface.o Menu.o Redirect.o test.o Tokenizer.o
+	g++ Base.o CMD.o Command.o Execute.o Group.o Interface.o Menu.o Redirect.o test.o Tokenizer.o -o rshell
 	
 	
 test.o: src/test.cpp
@@ -25,6 +25,9 @@ Interface.o: src/Interface.cc src/Interface.hh
 
 Menu.o: src/Menu.cc src/Menu.hh
 	g++ -c src/Menu.cc -std=c++11
+
+Redirect.o: src/Redirect.cc src/Redirect.hh
+	g++ -c src/Redirect.cc -std=c++11
 
 Tokenizer.o: src/Tokenizer.cpp src/Tokenizer.h
 	g++ -c src/Tokenizer.cpp -std=c++11
