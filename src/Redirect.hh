@@ -19,8 +19,8 @@ class Redirect : public Base {
 	
 	public:
 		
-		Redirect() : Base(), fullPath(""), typePath(""), separatedPath(0) {}
-		Redirect(string path, int connector) : Base(), fullPath(path), connector(type), separatedPath(0) {}
+		Redirect() : Base(), fullPath(""), connector(888), separatedPath(0) {}
+		Redirect(string path, int con) : Base(), fullPath(path), connector(con), separatedPath(0) {}
 		~Redirect();
 		void readyVector();
 		void execute();
