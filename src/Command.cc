@@ -30,12 +30,6 @@ int checkConnector(std::string conString){
 	else if(conString.size() > 1 && conString.at(conString.size() - 1) == '|' && conString.at(conString.size() - 2) == '|'){
     	return 2;
 	}
-	else if(conString.size() == 1 && conString == "<" || conString == ">" || conString == "|"){
-	    return 6;
-	}
-	else if(conString.size() > 1 && conString.at(conString.size() - 1) == '>' && conString.at(conString.size() - 2) == '>'){
-    	return 6;
-	}
 	else if(conString.size() == 1 && conString.at(conString.size() - 1) == ';'){
 	    return 1;
 	}
@@ -212,6 +206,36 @@ bool Command::fixQuote(Tokenizer& splitter, string& currCommand, string& basket,
 				return false;
 }
 
+bool redirect(Tokenizer& splitter, string& currCommand, string& basket, int& connection){
+				do{
+					if(currCommand == ""){
+						break;
+					}
+					
+					if(checkConnector(currCommand) != 0){
+						break;
+					}
+					
+					basket += " " + currCommand;
+					currCommand = splitter.next();
+				} while(true);
+				
+				if(currCommand == ""){
+					connection = 0;
+				} 
+				else{
+					connection = checkConnector(currCommand);
+				}
+				temp = new Redirect(basket, connection);
+				commandList.push_back(temp);
+
+				basket = "";
+				if(connection == 0){
+					return true;
+				}
+				return false;
+}
+
 void Command::splitString(std::string instruction){
 	if(instruction.at(0) == '#'){
 		return;
@@ -238,6 +262,12 @@ void Command::splitString(std::string instruction){
 			}
 			else if(currCommand.size() > 0 && currCommand.at(0) == '\"'){
 				if(fixQuote(splitter, currCommand, basket, connection, temp)){
+					return;
+				}
+			}
+
+			else if(currCommand.size() > 0 && ((currCommand.size() == 1 && (currCommand.at(0) == '|' || currCommand.at(0) == '>' || currCommand.at(0) == '<')) || (currCommand.size() == 2 && currCommand.at(0) == '>' && currCommand.at(1) == '>'))){
+				if(redirect(splitter, currCommand, basket, connection)){
 					return;
 				}
 			}
