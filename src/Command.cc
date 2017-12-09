@@ -206,7 +206,7 @@ bool Command::fixQuote(Tokenizer& splitter, string& currCommand, string& basket,
 				return false;
 }
 
-bool redirect(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp){
+bool Command::redirect(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp){
 				do{
 					if(currCommand == ""){
 						break;
