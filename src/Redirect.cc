@@ -15,7 +15,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <sys/wait.h>
-#include <fstream>
+#include <fstream> 
 
 const int MAX_ARGS = 64;
 
@@ -174,7 +174,86 @@ void Redirect::executeGG(string , string )
 }
 void Redirect::executeG(string command, string file)
 {
-	
+	  string completeCommand = command;
+  char splitCommand[1024];
+  char *executables[1024];
+  int charSize = completeCommand.size();
+  char* addLetter = NULL;
+  int i = 0;
+  int executablesIndex = 0;
+  
+  for (unsigned int j = 0; j < completeCommand.size(); j++){
+    splitCommand[j] = completeCommand[j];
+  }
+  
+  splitCommand[charSize] = '\0';
+  
+  addLetter = strtok(splitCommand, " " );
+  
+  while(addLetter != NULL){
+    executables[i++] = addLetter;
+    addLetter = strtok(NULL, " ");
+    executablesIndex++;
+  }
+    
+    
+    int     nbytes, ret, size, length, Descriptor1, Descriptor2, saveSTDIN, saveSTDOUT, writenum    ;
+    int fd[2];
+    string filename = completeCommand.substr(4, completeCommand.size() - 4);
+    string newFile = file;
+    pid_t   childpid;
+    ifstream is;
+    
+    const char* pathFileName = filename.c_str();
+    const char* pathNewFile = newFile.c_str();
+    
+    is.open (pathFileName, ios::binary );
+    is.seekg (0, ios::end);
+    length = is.tellg();
+    
+    char    readbuffer[length+1];
+    
+    
+    saveSTDIN = dup(0); 
+    saveSTDOUT = dup(1);
+    close(0);
+    close(1);
+    
+    Descriptor1 = open(pathFileName, O_RDONLY);
+    if (Descriptor1 < 0)
+    {
+        printf("FIRST: Can’t read file using file\n");
+        exit (1);
+    }
+    
+    Descriptor2 = open(pathNewFile, O_CREAT | O_WRONLY, 0600);
+    if (Descriptor2 < 0)
+    {
+        printf("SECOND: Can’t read file using file\n");
+        exit (1);
+    }
+    
+    ret = pipe(fd);
+    if(ret == -1){
+        perror("pipe");
+        exit(1);
+    }
+    
+    childpid = fork();
+    
+  if( childpid == 0) {
+      execvp(splitCommand, executables);
+    
+  } else if ( childpid > 0 ) { //parent case
+  } else {
+      cout << "This is an error" << endl;
+  }
+  
+    dup2(saveSTDIN, 0);
+    dup2(saveSTDOUT, 1);
+    close(Descriptor1);
+    close(Descriptor2);
+    return(0);
 }
 void Redirect::executeL(string , string )
 {
