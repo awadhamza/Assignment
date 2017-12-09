@@ -1,11 +1,21 @@
 #include "Redirect.hh"
 #include "Tokenizer.h"
+#include <unistd.h>		
+#include <stdio.h>		
+#include <stdlib.h>
+#include <iostream>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <string.h>
+
+const int MAX_ARGS = 64;
 
 void Redirect::readyVector()
 {
 	string currCommand;
 	Tokenizer splitter(getString());
 	vector<string> vectorCopy = getVector();
+	string basket = "";
 	
 	while((currCommand = splitter.next()) != "")
 	{
@@ -15,7 +25,7 @@ void Redirect::readyVector()
 			vectorCopy.push_back(currCommand);
 			basket = "";
 		}
-		else if (basket.size != 0){
+		else if (basket.size() != 0){
 			basket += " " + currCommand;
 		}
 		else
@@ -28,12 +38,16 @@ void Redirect::readyVector()
 
 void Redirect::execute()
 {
-	execute(getString(), getConnector());
+	execute(fullPath, connector);
 }
 
 void Redirect::execute(string fullCommand, int connector)
 {
 	readyVector();
+	
+	string leftString;
+	string leftConnector;
+	string rightString;
 	
 	vector<string> vectorCopy = getVector();
 	
@@ -41,22 +55,22 @@ void Redirect::execute(string fullCommand, int connector)
 		
 		if(vectorCopy.size() >= 3)
 		{
-			string leftString = vectorCopy.at(vectorCopy.size() - 3);
-			string leftConnector = vectorCopy.at(vectorCopy.size() - 2);
-			string rightString = vectorCopy.at(vectorCopy.size() - 1);
+			leftString = vectorCopy.at(vectorCopy.size() - 3);
+			leftConnector = vectorCopy.at(vectorCopy.size() - 2);
+			rightString = vectorCopy.at(vectorCopy.size() - 1);
 		} else {
 			break;
 		}
-		if(leftConnector == '|')
+		if(leftConnector == "|")
 		{
 			executePipe(leftString, rightString);
-		} else if (leftConnector == '>')
+		} else if (leftConnector == ">")
 		{
 			executeG(leftString, rightString);
 		} else if (leftConnector == ">>")
 		{
 			executeGG(leftString, rightString);
-		} else if (leftConnector == '<')
+		} else if (leftConnector == "<")
 		{
 			executeL(leftString, rightString);
 		}
