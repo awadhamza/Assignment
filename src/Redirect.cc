@@ -253,7 +253,6 @@ void Redirect::executeG(string command, string file)
     dup2(saveSTDOUT, 1);
     close(Descriptor1);
     close(Descriptor2);
-    return(0);
 }
 void Redirect::executeL(string , string )
 {
