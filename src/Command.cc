@@ -17,25 +17,31 @@ Command::~Command()
 	}
 }
 
-int Command::checkConnector(std::string conString){
-	if(conString == "[" && conString.size() == 1){
+int checkConnector(std::string conString){
+	if(conString.size() == 1 && conString == "["){
 		return 5;
 	}
-	else if(conString == "test" && conString.size() == 4){
+	else if(conString.size() > 1 && conString == "test" && conString.size() == 4){
 		return  4;
 	}
-    	else if(conString.at(conString.size() - 1) == '&' && conString.at(conString.size() - 2) == '&'){
+    	else if(conString.size() > 1 && conString.at(conString.size() - 1) == '&' && conString.at(conString.size() - 2) == '&'){
 		return 3;
 	}
-    	else if(conString.at(conString.size() - 1) == '|' && conString.at(conString.size() - 2) == '|'){
-        	return 2;
-    	}
-    	else if(conString.at(conString.size() - 1) == ';'){
-		return 1;
-    	}
-    	else{
-        	return 0;
-    	}
+	else if(conString.size() > 1 && conString.at(conString.size() - 1) == '|' && conString.at(conString.size() - 2) == '|'){
+    	return 2;
+	}
+	else if(conString.size() == 1 && conString == "<" || conString == ">" || conString == "|"){
+	    return 6;
+	}
+	else if(conString.size() > 1 && conString.at(conString.size() - 1) == '>' && conString.at(conString.size() - 2) == '>'){
+    	return 6;
+	}
+	else if(conString.size() == 1 && conString.at(conString.size() - 1) == ';'){
+	    return 1;
+	}
+	else{
+    	return 0;
+	}
 }
 
 std::string Command::cutConnector(std::string cutString){
