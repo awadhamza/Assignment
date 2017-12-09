@@ -17,7 +17,7 @@ Command::~Command()
 	}
 }
 
-int checkConnector(std::string conString){
+int Command::checkConnector(std::string conString){
 	if(conString.size() == 1 && conString == "["){
 		return 5;
 	}

@@ -159,15 +159,15 @@ if( pid == 0 ){
             }
         }
 }
-void executeGG(string , string )
+void Redirect::executeGG(string , string )
 {
 	
 }
-void executeG(string , string )
+void Redirect::executeG(string , string )
 {
 	
 }
-void executeL(string , string )
+void Redirect::executeL(string , string )
 {
 	
 }
