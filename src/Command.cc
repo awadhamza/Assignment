@@ -206,7 +206,7 @@ bool Command::fixQuote(Tokenizer& splitter, string& currCommand, string& basket,
 				return false;
 }
 
-bool redirect(Tokenizer& splitter, string& currCommand, string& basket, int& connection){
+bool redirect(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp){
 				do{
 					if(currCommand == ""){
 						break;
@@ -267,7 +267,7 @@ void Command::splitString(std::string instruction){
 			}
 
 			else if(currCommand.size() > 0 && ((currCommand.size() == 1 && (currCommand.at(0) == '|' || currCommand.at(0) == '>' || currCommand.at(0) == '<')) || (currCommand.size() == 2 && currCommand.at(0) == '>' && currCommand.at(1) == '>'))){
-				if(redirect(splitter, currCommand, basket, connection)){
+				if(redirect(splitter, currCommand, basket, connection, temp)){
 					return;
 				}
 			}
