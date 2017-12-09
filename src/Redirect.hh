@@ -34,6 +34,7 @@ class Redirect : public Base {
 		string getString();
 		string getConnector();
 		vector<string> getVector();
+		bool contains( string cmd, char c );
 		
 };
 

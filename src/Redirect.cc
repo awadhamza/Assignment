@@ -10,7 +10,18 @@ void Redirect::readyVector()
 	while((currCommand = splitter.next()) != "")
 	{
 		
-		vectorCopy.push_back(currCommand);
+		if(currCommand == "|" || currCommand == ">" || currCommand == "<"){
+			vectorCopy.push_back(basket);
+			vectorCopy.push_back(currCommand);
+			basket = "";
+		}
+		else if (basket.size != 0){
+			basket += " " + currCommand;
+		}
+		else
+		{
+			basket += currCommand;
+		}
 		
 	}
 }
@@ -175,4 +186,10 @@ string Redirect::getConnector()
 vector<string> Redirect::getVector()
 {
 	return separatedPath;
+}
+
+bool Redirect::contains( string cmd, char c )
+{
+  size_t pos = cmd.find( c );
+  return pos != string::npos;
 }
