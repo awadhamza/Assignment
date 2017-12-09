@@ -7,34 +7,70 @@ string Redirect::findNextDirection(string command)
 	
 	for(unsigned i = 0; i < command.size(); i++)
 	{
-		if(command.at(i) == "|")
+		if(command.at(i) == '|')
 		{
 			str = "|";
-		} else if (command.at(i) == ">")
+			return str;
+		} else if (command.at(i) == '>')
 		{
-			if(command.at(i+1) == ">")
+			if(command.at(i+1) == '>')
 			{
 				str = ">";
+				return str;
 			}
 			str = ">>";
-		} else if(command.at(i) == "<"){
+			return str;
+		} else if(command.at(i) == '<'){
 			str = "<";
+			return str;
 		} else {
 			str = "";
+			return str;
 		}
-		return str;
 	}
 }
 
-void Redirect::execute()
+string Redirect::findNextString(string command)
 {
+	string str;
 	
+	for(unsigned i = 0; i < command.size(); i++)
+	{
+		if(command.at(i) != '|' && command.at(i) != '>' && command.at(i) != '<' && command.at(i) != '\0')
+		{
+			str += command.at(i);
+		}
+		else
+		{
+			return str;
+		}
+	}
+}
+
+void Redirect::readyVector()
+{
+	string commandCopy = getString();
+	string strFunc;
+	string dirFunc;
+	while(commandCopy.size())
+	{
+		//Get next string and direction char
+		strFunc = findNextString(commandCopy);
+		dirFunc = findNextDirection(commandCopy);
+		//Remove those receieved strings from string copy
+		commandCopy.erase(0, strFunc.size());
+		commandCopy.erase(0, dirFunc.size());
+		//Push the strings in order to the ultimate vector
+		separatedPath.push_back(strFunc);
+		separatedPath.push_back(dirFunc);
+	}
 }
 
 void Redirect::execute(string fullCommand, int connector)
 {
+	readyVector();
 	
-	string nextDirect = findNextDirection(fullCommand);
+	
 	
 }
 
