@@ -7,6 +7,15 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <string.h>
+#include <cstdlib>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <signal.h>
+#include <iostream>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <fstream>
 
 const int MAX_ARGS = 64;
 
@@ -163,7 +172,7 @@ void Redirect::executeGG(string , string )
 {
 	
 }
-void Redirect::executeG(string , string )
+void Redirect::executeG(string command, string file)
 {
 	
 }
