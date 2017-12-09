@@ -5,6 +5,7 @@
 #include "Tokenizer.h"
 #include "CMD.hh"
 #include "Group.hh"
+#inlcude "Redirect.hh"
 #include <vector>
 #include <iostream>
 
