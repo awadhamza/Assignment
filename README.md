@@ -31,12 +31,18 @@ The chosen design style for accomplishing this is composite. This is because it 
 	(ech a || echo b) && echo c
 	([ -e src/Menu.hh ] || echo a) || echo b; echo c
 	echo A && echo B #echo C
-	
+	pwd > filename
+	cat filename
+	echo 'Hello, cruel world!' >> filename
+	du | sort -nr | head
+	ls -la | head >> new_file
+
 	etc..
 
 
 # Known Issues
 	Very narrow and unspecified edgecases.
+	Also, uncompleted redirection support.
 
 
 # Classes/Class Groups - Description
