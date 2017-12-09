@@ -25,6 +25,7 @@ class Command{
 		void fixTouchingConnectors(string& instruction);
 		bool fixParen(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp);
 		bool fixQuote(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp);
+		bool redirect(Tokenizer& splitter, string& currCommand, string& basket, int& connection, Base* temp);
 };
 
 #endif
