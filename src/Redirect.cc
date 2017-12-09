@@ -79,7 +79,7 @@ void Redirect::execute(string fullCommand, int connector)
 	
 }
 
-void executePipe(string command, string secondCommand)
+void Redirect::executePipe(string command, string secondCommand)
 {
 	string completeCommand = command;
   string completeCommand1 = secondCommand;
@@ -142,7 +142,7 @@ if( pid == 0 ){
 	
 	if(contains(completeCommand, '|') || contains(completeCommand, '<') || contains(completeCommand, '>')){
 		Redirect* temp = new Redirect(completeCommand, 0);
-		temp.execute();
+		temp->execute();
 	}
 	else{
 		if(execvp(splitCommand, executables) == -1){
@@ -177,11 +177,6 @@ bool Redirect::is_Group()
 	return false;
 }
 
-void Redirect::setType(string path)
-{
-	typePath = path;
-}
-
 void Redirect::setString(string str)
 {
 	fullPath = str;
@@ -192,7 +187,7 @@ string Redirect::getString()
 	return fullPath;
 }
 
-string Redirect::getConnector()
+int Redirect::getConnector()
 {
 	return connector;
 }
