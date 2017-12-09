@@ -6,10 +6,8 @@
 #include <vector>
 #include <iostream>
 
-using std::cout;
-using std::cin;
-using std::string;
-using std::vector;
+
+using namespace std;
 
 class Redirect : public Base {
 	private:
@@ -32,9 +30,9 @@ class Redirect : public Base {
 		bool is_Group();
 		void setString(string );
 		string getString();
-		string getConnector();
+		int getConnector();
 		vector<string> getVector();
-		bool contains( string cmd, char c );
+		bool contains( string , char  );
 		
 };
 
